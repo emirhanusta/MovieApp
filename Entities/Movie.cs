@@ -16,6 +16,6 @@ namespace MovieApp.Entities
         public Director? Director { get; set; }
         public List<Actor>? Actors { get; set; }
         public List<Review>? Reviews { get; set; }
-        public List<Wachlist>? Wachlists { get; set; }        
+        public List<Watchlist>? Wachlists { get; set; }        
     }
 }

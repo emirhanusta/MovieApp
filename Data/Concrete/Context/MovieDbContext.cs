@@ -14,7 +14,7 @@ namespace MovieApp.Data.Concrete.Context
         public DbSet<Director> Directors { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<Wachlist> Wachlists { get; set; }
+        public DbSet<Watchlist> Wachlists { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Genre> Genres { get; set; }

@@ -11,7 +11,7 @@ using MovieApp.Data.Concrete.Context;
 namespace MovieApp.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    [Migration("20240711121814_InitialCreate")]
+    [Migration("20240711203655_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -68,9 +68,6 @@ namespace MovieApp.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateOnly?>("UpdatedDate")
                         .HasColumnType("TEXT");
 
@@ -97,9 +94,6 @@ namespace MovieApp.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateOnly?>("UpdatedDate")
                         .HasColumnType("TEXT");
 
@@ -120,9 +114,6 @@ namespace MovieApp.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateOnly?>("UpdatedDate")
                         .HasColumnType("TEXT");
 
@@ -141,9 +132,6 @@ namespace MovieApp.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<long>("ReviewId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Status")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateOnly?>("UpdatedDate")
@@ -180,9 +168,6 @@ namespace MovieApp.Migrations
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
@@ -213,9 +198,6 @@ namespace MovieApp.Migrations
 
                     b.Property<float>("Rating")
                         .HasColumnType("REAL");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
@@ -250,9 +232,6 @@ namespace MovieApp.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateOnly?>("UpdatedDate")
                         .HasColumnType("TEXT");
 
@@ -270,7 +249,7 @@ namespace MovieApp.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("MovieApp.Entities.Wachlist", b =>
+            modelBuilder.Entity("MovieApp.Entities.Watchlist", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -278,9 +257,6 @@ namespace MovieApp.Migrations
 
                     b.Property<DateOnly>("CreatedDate")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateOnly?>("UpdatedDate")
                         .HasColumnType("TEXT");
@@ -293,7 +269,7 @@ namespace MovieApp.Migrations
                     b.ToTable("Wachlists");
                 });
 
-            modelBuilder.Entity("MovieWachlist", b =>
+            modelBuilder.Entity("MovieWatchlist", b =>
                 {
                     b.Property<long>("MoviesId")
                         .HasColumnType("INTEGER");
@@ -305,7 +281,7 @@ namespace MovieApp.Migrations
 
                     b.HasIndex("WachlistsId");
 
-                    b.ToTable("MovieWachlist");
+                    b.ToTable("MovieWatchlist");
                 });
 
             modelBuilder.Entity("ActorMovie", b =>
@@ -373,7 +349,7 @@ namespace MovieApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MovieWachlist", b =>
+            modelBuilder.Entity("MovieWatchlist", b =>
                 {
                     b.HasOne("MovieApp.Entities.Movie", null)
                         .WithMany()
@@ -381,7 +357,7 @@ namespace MovieApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieApp.Entities.Wachlist", null)
+                    b.HasOne("MovieApp.Entities.Watchlist", null)
                         .WithMany()
                         .HasForeignKey("WachlistsId")
                         .OnDelete(DeleteBehavior.Cascade)

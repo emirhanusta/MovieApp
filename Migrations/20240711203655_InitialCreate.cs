@@ -21,8 +21,7 @@ namespace MovieApp.Migrations
                     Biography = table.Column<string>(type: "TEXT", nullable: true),
                     Image = table.Column<string>(type: "TEXT", nullable: true),
                     CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    Status = table.Column<bool>(type: "INTEGER", nullable: false)
+                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,8 +38,7 @@ namespace MovieApp.Migrations
                     Biography = table.Column<string>(type: "TEXT", nullable: true),
                     Image = table.Column<string>(type: "TEXT", nullable: true),
                     CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    Status = table.Column<bool>(type: "INTEGER", nullable: false)
+                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,8 +53,7 @@ namespace MovieApp.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    Status = table.Column<bool>(type: "INTEGER", nullable: false)
+                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,8 +72,7 @@ namespace MovieApp.Migrations
                     image = table.Column<string>(type: "TEXT", nullable: true),
                     biography = table.Column<string>(type: "TEXT", nullable: true),
                     CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    Status = table.Column<bool>(type: "INTEGER", nullable: false)
+                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,8 +87,7 @@ namespace MovieApp.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
                     CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    Status = table.Column<bool>(type: "INTEGER", nullable: false)
+                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,8 +106,7 @@ namespace MovieApp.Migrations
                     ReleaseDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     DirectorId = table.Column<long>(type: "INTEGER", nullable: false),
                     CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    Status = table.Column<bool>(type: "INTEGER", nullable: false)
+                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -134,8 +128,7 @@ namespace MovieApp.Migrations
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
                     ReviewId = table.Column<long>(type: "INTEGER", nullable: false),
                     CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    Status = table.Column<bool>(type: "INTEGER", nullable: false)
+                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -197,7 +190,7 @@ namespace MovieApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MovieWachlist",
+                name: "MovieWatchlist",
                 columns: table => new
                 {
                     MoviesId = table.Column<long>(type: "INTEGER", nullable: false),
@@ -205,15 +198,15 @@ namespace MovieApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieWachlist", x => new { x.MoviesId, x.WachlistsId });
+                    table.PrimaryKey("PK_MovieWatchlist", x => new { x.MoviesId, x.WachlistsId });
                     table.ForeignKey(
-                        name: "FK_MovieWachlist_Movies_MoviesId",
+                        name: "FK_MovieWatchlist_Movies_MoviesId",
                         column: x => x.MoviesId,
                         principalTable: "Movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovieWachlist_Wachlists_WachlistsId",
+                        name: "FK_MovieWatchlist_Wachlists_WachlistsId",
                         column: x => x.WachlistsId,
                         principalTable: "Wachlists",
                         principalColumn: "Id",
@@ -232,8 +225,7 @@ namespace MovieApp.Migrations
                     MovieId = table.Column<long>(type: "INTEGER", nullable: false),
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
                     CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    Status = table.Column<bool>(type: "INTEGER", nullable: false)
+                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -273,8 +265,8 @@ namespace MovieApp.Migrations
                 column: "DirectorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieWachlist_WachlistsId",
-                table: "MovieWachlist",
+                name: "IX_MovieWatchlist_WachlistsId",
+                table: "MovieWatchlist",
                 column: "WachlistsId");
 
             migrationBuilder.CreateIndex(
@@ -301,7 +293,7 @@ namespace MovieApp.Migrations
                 name: "Likes");
 
             migrationBuilder.DropTable(
-                name: "MovieWachlist");
+                name: "MovieWatchlist");
 
             migrationBuilder.DropTable(
                 name: "Reviews");

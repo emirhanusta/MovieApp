@@ -5,6 +5,5 @@ namespace MovieApp.Entities
         public long Id { get; set; }
         public DateOnly CreatedDate { get; set; }
         public DateOnly? UpdatedDate { get; set; }
-        public bool Status { get; set; } = true;
     }
 }

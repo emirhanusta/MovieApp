@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MovieApp.Entities
 {
-    public class Wachlist : BaseEntity
+    public class Watchlist : BaseEntity
     {
         public long UserId { get; set; }
         public List<Movie>? Movies { get; set; }
