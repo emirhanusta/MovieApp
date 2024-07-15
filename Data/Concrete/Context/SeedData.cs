@@ -21,9 +21,7 @@ namespace MovieApp.Data.Concrete.Context
                 if (!context.Users.Any())
                 {
                     context.Users.AddRange(
-                new User { Id = 1, Username = "admin", Password = "admin", CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now) },
-                new User { Id = 2, Username = "user", Password = "user", CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now) }
-                    );
+                new User { Id = 1, Username = "emirhanusta", Password = "123456", Email = "info@emirhanusta.com", CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), Name = "Emirhan Usta", Image = "johnny-depp.jpg" }, new User { Id = 2, Username = "john", Password = "123456", Email = "info@jhondoe.com", CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), Name = "John Doe", Image = "johnny-depp.jpg" });
                     context.SaveChanges();
                 }
                 if (!context.Actors.Any())
@@ -64,9 +62,45 @@ namespace MovieApp.Data.Concrete.Context
                 if (!context.Movies.Any())
                 {
                     context.Movies.AddRange(
-                new Movie { Id = 1, Title = "Inception", CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), Description = "Inception is a 2010 science fiction action film written and directed by Christopher Nolan, who also produced the film with Emma Thomas, his wife. The film stars Leonardo DiCaprio as a professional thief who steals information by infiltrating the subconscious of his targets.", Image = "inception.jpg", ReleaseDate = new DateTime(2010, 7, 16), DirectorId = 1 },
-                new Movie { Id = 2, Title = "Catch Me If You Can", CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), Description = "Catch Me If You Can is a 2002 American biographical crime film directed and produced by Steven Spielberg from a screenplay by Jeff Nathanson. The film stars Leonardo DiCaprio and Tom Hanks, with Christopher Walken, Martin Sheen, and Nathalie Baye in supporting roles.", Image = "catch-me-if-you-can.jpg", ReleaseDate = new DateTime(2002, 12, 25), DirectorId = 2 },
-                new Movie { Id = 3, Title = "The Terminal", CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), Description = "The Terminal is a 2004 American comedy-drama film co-produced and directed by Steven Spielberg and starring Tom Hanks, Catherine Zeta-Jones, and Stanley Tucci. The film is about an Eastern European", Image = "the-terminal.jpg", ReleaseDate = new DateTime(2004, 6, 18), DirectorId = 2 }
+                new Movie
+                {
+                    Id = 1,
+                    Title = "Inception",
+                    CreatedDate = DateOnly.FromDateTime(DateTime.Now),
+                    UpdatedDate = DateOnly.FromDateTime(DateTime.Now),
+                    Description = "Inception is a 2010 science fiction action film written and directed by Christopher Nolan, who also produced the film with Emma Thomas, his wife. The film stars Leonardo DiCaprio as a professional thief who steals information by infiltrating the subconscious of his targets.",
+                    Image = "inception.jpg",
+                    ReleaseDate = new DateTime(2010, 7, 16),
+                    DirectorId = 1,
+                    Genres = context.Genres.Where(x => x.Id == 1 || x.Id == 2).ToList(),
+                    Actors = context.Actors.Where(x => x.Id == 1 || x.Id == 2).ToList()
+                },
+                new Movie
+                {
+                    Id = 2,
+                    Title = "Catch Me If You Can",
+                    CreatedDate = DateOnly.FromDateTime(DateTime.Now),
+                    UpdatedDate = DateOnly.FromDateTime(DateTime.Now),
+                    Description = "Catch Me If You Can is a 2002 American biographical crime film directed and produced by Steven Spielberg from a screenplay by Jeff Nathanson. The film stars Leonardo DiCaprio and Tom Hanks, with Christopher Walken, Martin Sheen, and Nathalie Baye in supporting roles.",
+                    Image = "catch-me-if-you-can.jpg",
+                    ReleaseDate = new DateTime(2002, 12, 25),
+                    DirectorId = 2,
+                    Genres = context.Genres.Where(x => x.Id == 3).ToList(),
+                    Actors = context.Actors.Where(x => x.Id == 1 || x.Id == 2).ToList()
+                },
+                new Movie
+                {
+                    Id = 3,
+                    Title = "The Terminal",
+                    CreatedDate = DateOnly.FromDateTime(DateTime.Now),
+                    UpdatedDate = DateOnly.FromDateTime(DateTime.Now),
+                    Description = "The Terminal is a 2004 American comedy-drama film co-produced and directed by Steven Spielberg and starring Tom Hanks, Catherine Zeta-Jones, and Stanley Tucci. The film is about an Eastern European",
+                    Image = "the-terminal.jpg",
+                    ReleaseDate = new DateTime(2004, 6, 18),
+                    DirectorId = 2,
+                    Genres = context.Genres.Where(x => x.Id == 3).ToList(),
+                    Actors = context.Actors.Where(x => x.Id == 2).ToList()
+                }
                     );
                     context.SaveChanges();
                 }
