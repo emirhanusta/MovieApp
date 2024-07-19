@@ -1,0 +1,59 @@
+@model List<Review>
+
+<div class="container mt-5">
+    <h2 class="h4">Popular Reviews</h2>
+    <div class="row">
+        @foreach (var review in Model)
+        {
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                <div class="card h-100 text-white bg-dark">
+                    <div class="card-header d-flex align-items-center bg-dark">
+                        <a href="/profile/@review.User.Username" class="d-flex align-items-center">
+                            <img src="~/img/@review.User.Image" class="rounded-circle me-3"
+                                style="width: 40px; height: 40px;" alt="@review.User.Username">
+                            <div>
+                                <h5 class="card-title mb-0 text-white" style="font-size: 1rem;">@review.User.Username</h5>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div>
+                                <img src="~/img/@review.Movie.Image" class="img-fluid me-3" style="width: 80px;"
+                                    alt="@review.Movie.Title">
+                            </div>
+                            <div>
+                                <h5 class="card-title mb-0 text-white" style="font-size: 1rem;">@review.Movie.Title <span
+                                        class="text-muted">@review.Movie.ReleaseDate.ToString("yyyy")</span></h5>
+                                <div class="text-warning my-2" style="font-size: 0.8rem;">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        if (i < @review.Rating)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                        else if (i == @review.Rating && @review.Rating % 1 != 0)
+                                        {
+                                            <i class="fas fa-star-half-alt"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-star"></i>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <p class="card-text mt-3" style="font-size: 0.9rem;">@review.Content</p>
+                    </div>
+                    <div class="card-footer bg-dark d-flex justify-content-between">
+                        <span class="text-muted" style="font-size: 0.9rem;">@review.CreatedDate</span>
+                        <span class="text-muted" style="font-size: 0.9rem; float: right;"><i class="bi bi-heart">
+                            </i>@review.Likes.Count</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,18 @@
+@model List<Movie>
+
+<div class="container">
+    <h1 class="h4 mb-4">New On MovieApp</h1>
+    <hr>
+    <div class="row">
+        @foreach (var movie in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4"> 
+                <div class="card bg-transparent border-0">
+                    <a asp-action="Details" asp-route-id="@movie.Id" asp-controller="Movies">
+                        <img src="~/img/@movie.Image" class="card-img-top img-thumbnail rounded" alt="@movie.Title">
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

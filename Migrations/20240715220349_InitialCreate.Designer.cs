@@ -11,7 +11,7 @@ using MovieApp.Data.Concrete.Context;
 namespace MovieApp.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    [Migration("20240711203655_InitialCreate")]
+    [Migration("20240715220349_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -142,6 +142,8 @@ namespace MovieApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ReviewId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Likes");
@@ -223,10 +225,19 @@ namespace MovieApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Biography")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateOnly>("CreatedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
@@ -236,12 +247,6 @@ namespace MovieApp.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("biography")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("image")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -256,6 +261,9 @@ namespace MovieApp.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateOnly>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.Property<DateOnly?>("UpdatedDate")
@@ -316,6 +324,12 @@ namespace MovieApp.Migrations
 
             modelBuilder.Entity("MovieApp.Entities.Like", b =>
                 {
+                    b.HasOne("MovieApp.Entities.Review", null)
+                        .WithMany("Likes")
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MovieApp.Entities.User", null)
                         .WithMany("Likes")
                         .HasForeignKey("UserId")
@@ -336,17 +350,21 @@ namespace MovieApp.Migrations
 
             modelBuilder.Entity("MovieApp.Entities.Review", b =>
                 {
-                    b.HasOne("MovieApp.Entities.Movie", null)
+                    b.HasOne("MovieApp.Entities.Movie", "Movie")
                         .WithMany("Reviews")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieApp.Entities.User", null)
+                    b.HasOne("MovieApp.Entities.User", "User")
                         .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MovieWatchlist", b =>
@@ -372,6 +390,11 @@ namespace MovieApp.Migrations
             modelBuilder.Entity("MovieApp.Entities.Movie", b =>
                 {
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("MovieApp.Entities.Review", b =>
+                {
+                    b.Navigation("Likes");
                 });
 
             modelBuilder.Entity("MovieApp.Entities.User", b =>

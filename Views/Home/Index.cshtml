@@ -1,8 +1,29 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+﻿<div class="container">
+    <div class="row">
+        <!-- Left Column: NewMovies and PopularMovies -->
+        <div class="col-lg-8">
+            <div class="row">
+                <!-- NewMovies Component -->
+                <div class="col-12 mb-4">
+                    @await Component.InvokeAsync("NewMovies")
+                </div>
+                <!-- PopularMovies Component -->
+                <div class="col-12 mb-4">
+                    @await Component.InvokeAsync("PopularMovies")
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Column: PopularGenres and PopularReviews -->
+        <div class="col-lg-4">
+            <!-- PopularGenres Component -->
+            <div class="mb-4">
+                @await Component.InvokeAsync("PopularGenres")
+            </div>
+            <!-- PopularReviews Component -->
+            <div>
+                @await Component.InvokeAsync("PopularReviews")
+            </div>
+        </div>
+    </div>
 </div>

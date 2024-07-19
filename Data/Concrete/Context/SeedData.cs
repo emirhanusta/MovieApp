@@ -21,7 +21,7 @@ namespace MovieApp.Data.Concrete.Context
                 if (!context.Users.Any())
                 {
                     context.Users.AddRange(
-                new User { Id = 1, Username = "emirhanusta", Password = "123456", Email = "info@emirhanusta.com", CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), Name = "Emirhan Usta", Image = "johnny-depp.jpg" }, new User { Id = 2, Username = "john", Password = "123456", Email = "info@jhondoe.com", CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), Name = "John Doe", Image = "johnny-depp.jpg" });
+                new User { Id = 1, Username = "emirhanusta", Password = "123456", Email = "info@emirhanusta.com", CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), Name = "Emirhan Usta", Image = "johnny-depp.jpg" }, new User { Id = 2, Username = "john", Password = "123456", Email = "info@jhondoe.com", CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), Name = "John Doe", Image = "christopher-nolan.jpg" });
                     context.SaveChanges();
                 }
                 if (!context.Actors.Any())
@@ -50,15 +50,6 @@ namespace MovieApp.Data.Concrete.Context
                     );
                     context.SaveChanges();
                 }
-                if (!context.Wachlists.Any())
-                {
-                    context.Wachlists.AddRange(
-                new Watchlist { Id = 1, UserId = 1, CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now) },
-                new Watchlist { Id = 2, UserId = 2, CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now) }
-                    );
-                    context.SaveChanges();
-                }
-
                 if (!context.Movies.Any())
                 {
                     context.Movies.AddRange(
@@ -120,7 +111,20 @@ namespace MovieApp.Data.Concrete.Context
                 new Like { Id = 2, ReviewId = 2, CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), UserId = 2 }
                     );
                     context.SaveChanges();
+                    context.Reviews.Where(x => x.Id == 1).ToList().ForEach(x => x.Likes = context.Likes.Where(x => x.Id == 1).ToList());
+                    context.Reviews.Where(x => x.Id == 2).ToList().ForEach(x => x.Likes = context.Likes.Where(x => x.Id == 2).ToList());
+                    context.SaveChanges();
                 }
+
+                if (!context.Wachlists.Any())
+                {
+                    context.Wachlists.AddRange(
+                new Watchlist { Id = 1, Name = "List1", UserId = 1, CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), Movies = context.Movies.Where(x => x.Id == 1).ToList() },
+                new Watchlist { Id = 2, Name = "List2", UserId = 2, CreatedDate = DateOnly.FromDateTime(DateTime.Now), UpdatedDate = DateOnly.FromDateTime(DateTime.Now), Movies = context.Movies.Where(x => x.Id == 2 || x.Id == 3).ToList() }
+                    );
+                    context.SaveChanges();
+                }
+
             }
         }
     }

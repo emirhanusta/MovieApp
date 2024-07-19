@@ -13,6 +13,38 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\catch-me-if-you-can.jpg",
+      "PackagePath": "staticwebassets\\img\\catch-me-if-you-can.jpg"
+    },
+    {
+      "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\christopher-nolan.jpg",
+      "PackagePath": "staticwebassets\\img\\christopher-nolan.jpg"
+    },
+    {
+      "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\inception.jpg",
+      "PackagePath": "staticwebassets\\img\\inception.jpg"
+    },
+    {
+      "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\johnny-depp.jpg",
+      "PackagePath": "staticwebassets\\img\\johnny-depp.jpg"
+    },
+    {
+      "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\leonardo-dicaprio.jpg",
+      "PackagePath": "staticwebassets\\img\\leonardo-dicaprio.jpg"
+    },
+    {
+      "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\steven-spielberg.jpg",
+      "PackagePath": "staticwebassets\\img\\steven-spielberg.jpg"
+    },
+    {
+      "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\the-terminal.jpg",
+      "PackagePath": "staticwebassets\\img\\the-terminal.jpg"
+    },
+    {
+      "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\tom-hanks.jpg",
+      "PackagePath": "staticwebassets\\img\\tom-hanks.jpg"
+    },
+    {
       "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

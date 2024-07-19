@@ -67,10 +67,11 @@ namespace MovieApp.Migrations
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Username = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
                     Password = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: true),
-                    image = table.Column<string>(type: "TEXT", nullable: true),
-                    biography = table.Column<string>(type: "TEXT", nullable: true),
+                    Image = table.Column<string>(type: "TEXT", nullable: true),
+                    Biography = table.Column<string>(type: "TEXT", nullable: true),
                     CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
                 },
@@ -85,6 +86,7 @@ namespace MovieApp.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
                     CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
@@ -115,28 +117,6 @@ namespace MovieApp.Migrations
                         name: "FK_Movies_Directors_DirectorId",
                         column: x => x.DirectorId,
                         principalTable: "Directors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Likes",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
-                    ReviewId = table.Column<long>(type: "INTEGER", nullable: false),
-                    CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Likes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Likes_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -244,6 +224,34 @@ namespace MovieApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Likes",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ReviewId = table.Column<long>(type: "INTEGER", nullable: false),
+                    CreatedDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    UpdatedDate = table.Column<DateOnly>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Likes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Likes_Reviews_ReviewId",
+                        column: x => x.ReviewId,
+                        principalTable: "Reviews",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Likes_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ActorMovie_MoviesId",
                 table: "ActorMovie",
@@ -253,6 +261,11 @@ namespace MovieApp.Migrations
                 name: "IX_GenreMovie_MoviesId",
                 table: "GenreMovie",
                 column: "MoviesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Likes_ReviewId",
+                table: "Likes",
+                column: "ReviewId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Likes_UserId",
@@ -296,13 +309,13 @@ namespace MovieApp.Migrations
                 name: "MovieWatchlist");
 
             migrationBuilder.DropTable(
-                name: "Reviews");
-
-            migrationBuilder.DropTable(
                 name: "Actors");
 
             migrationBuilder.DropTable(
                 name: "Genres");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "Wachlists");

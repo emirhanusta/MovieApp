@@ -1,0 +1,94 @@
+@model MovieCreateViewModel
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0 row justify-content-center">Create Movie</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="Post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label asp-for="Title" class="form-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Image" class="form-label"></label>
+                            <input type="file" name="imageFile" id="imageFile" class="form-control">    
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ReleaseDate" class="form-label"></label>
+                            <input asp-for="ReleaseDate" type="date" class="form-control" />
+                            <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DirectorId" class="form-label"></label>
+                            <select asp-for="DirectorId" class="form-control" asp-items="ViewBag.Directors">
+                                <option value="">Select Director</option>
+                            </select>
+                            <span asp-validation-for="DirectorId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Genres</label>
+                            <div class="bg-light p-2 border rounded">
+                                @foreach (var genre in ViewBag.Genres)
+                                {
+                                    <div class="form-check">
+                                        <input type="checkbox" name="genreIds" class="form-check-input" value="@genre.Id" id="genre_@genre.Id">
+                                        <label class="form-check-label" for="genre_@genre.Id">
+                                            @genre.Name
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            @if (ViewData.ModelState["Genres"]?.Errors.Count > 0)
+                            {
+                                <span class="text-danger">@ViewData.ModelState["Genres"].Errors[0].ErrorMessage</span>
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Actors</label>
+                            <div class="bg-light p-2 border rounded">
+                                @foreach (var actor in ViewBag.Actors)
+                                {
+                                    <div class="form-check">
+                                        <input type="checkbox" name="actorIds" class="form-check-input" value="@actor.Id" id="actor_@actor.Id">
+                                        <label class="form-check-label" for="actor_@actor.Id">
+                                            @actor.Name
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            @if (ViewData.ModelState["Actors"]?.Errors.Count > 0)
+                            {
+                                <span class="text-danger">@ViewData.ModelState["Actors"].Errors[0].ErrorMessage</span>
+                            }
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+            var fileName = document.getElementById("customFile").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+    </script>
+}

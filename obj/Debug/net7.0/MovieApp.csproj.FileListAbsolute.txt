@@ -66,3 +66,4 @@ C:\Users\emirh\Desktop\MovieApp\bin\Debug\net7.0\runtimes\win-arm\native\e_sqlit
 C:\Users\emirh\Desktop\MovieApp\bin\Debug\net7.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\emirh\Desktop\MovieApp\bin\Debug\net7.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\emirh\Desktop\MovieApp\bin\Debug\net7.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\emirh\Desktop\MovieApp\bin\Debug\net7.0\libman.json

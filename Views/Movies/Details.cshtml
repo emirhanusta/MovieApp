@@ -1,0 +1,89 @@
+@model Movie
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <img src="~/img/@Model.Image" class="img-fluid rounded" alt="@Model.Title">
+        </div>
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            <h1 class="h3">@Model.Title</h1>
+            Directed by <a asp-action="Details" asp-controller="Director" asp-route-id="@Model.DirectorId"
+                class="btn btn-link">@Model.Director.Name</a>
+            <div>
+                @foreach (var genre in Model.Genres)
+                {
+                    <a asp-action="List" asp-controller="Genre" asp-route-id="@genre.Id" class="badge badge-secondary">
+                        <span class="text-black">@genre.Name</span>
+                    </a>
+                }
+            </div>
+
+            <p>@Model.Description</p>
+            <p class="text-muted">Release Date: @Model.ReleaseDate.ToShortDateString()</p>
+            <div>
+                @foreach (var actor in Model.Actors ?? Enumerable.Empty<Actor>())
+                {
+                    <a asp-action="Details" asp-controller="Actor" asp-route-id="@actor.Id" class="badge badge-secondary">
+                        <span class="text-black font-weight-bold">@actor.Name</span>
+                    </a>
+                }
+            </div>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-primary mt-3">Back to Home</a>
+        </div>
+    </div>
+
+<div class="container mt-5">
+    <h2 class="h4">Popular Reviews</h2>
+    <div class="row">
+        @foreach (var review in Model.Reviews)
+        {
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                <div class="card h-100 text-white bg-dark">
+                    <div class="card-header d-flex align-items-center bg-dark">
+                        <a href="/profile/@review.User.Username" class="d-flex align-items-center">
+                            <img src="~/img/@review.User.Image" class="rounded-circle me-2"
+                                style="width: 30px; height: 30px;" alt="@review.User.Username">
+                            <div>
+                                <h5 class="card-title mb-0 text-white" style="font-size: 0.9rem;">@review.User.Username</h5>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div>
+                                <img src="~/img/@review.Movie.Image" class="img-fluid me-2" style="width: 60px;"
+                                    alt="@review.Movie.Title">
+                            </div>
+                            <div>
+                                <h5 class="card-title mb-0 text-white" style="font-size: 0.8rem;">@review.Movie.Title <span
+                                        class="text-muted">@review.Movie.ReleaseDate.ToString("yyyy")</span></h5>
+                                <div class="text-warning my-1" style="font-size: 0.7rem;">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        if (i < @review.Rating)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                        else if (i == @review.Rating && @review.Rating % 1 != 0)
+                                        {
+                                            <i class="fas fa-star-half-alt"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-star"></i>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <p class="card-text mt-2" style="font-size: 0.8rem;">@review.Content</p>
+                    </div>
+                    <div class="card-footer bg-dark d-flex justify-content-between">
+                        <span class="text-muted" style="font-size: 0.7rem;">@review.CreatedDate</span>
+                        <span class="text-muted" style="font-size: 0.7rem;"><i class="bi bi-heart"> </i>@review.Likes.Count</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
