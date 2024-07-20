@@ -8,6 +8,8 @@ namespace MovieApp.Data.Abstract
 {
     public interface ILikeRepository
     {
-        IQueryable<Like> GetAll();
+        IQueryable<Like> Likes { get; }
+        void SaveLike(Like like);
+        void DeleteLike(Like like);
     }
 }
