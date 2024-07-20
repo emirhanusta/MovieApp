@@ -1,9 +1,4 @@
-.custom-badge {
-    background-color: #343a40; /* Koyu gri arka plan rengi */
-    color: #ffffff; /* Beyaz metin rengi */
-    padding: 0.25em 0.4em;
-    font-size: 90%;
-    font-weight: 700;
-    border-radius: 0.2rem;
-    display: inline-block;
-}
+
+a {
+    text-decoration: none !important;
+  }

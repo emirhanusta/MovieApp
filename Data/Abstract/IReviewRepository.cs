@@ -10,6 +10,7 @@ namespace MovieApp.Data.Abstract
     {
         IQueryable<Review> Reviews { get; }
         
+        void SaveReview(Review entity);
         
     }
 }

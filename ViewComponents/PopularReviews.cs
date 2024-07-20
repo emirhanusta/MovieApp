@@ -19,7 +19,7 @@ namespace MovieApp.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var reviews = await _reviewRepository.Reviews.Include(r => r.Movie).Include(r => r.Likes).Include(r => r.User).OrderByDescending(r => r.Likes.Count).Take(5).ToListAsync();
+            var reviews = await _reviewRepository.Reviews.Include(r => r.Movie).Include(r => r.Likes).Include(r => r.User).OrderByDescending(r => r.Likes.Count).Take(4).ToListAsync();
             return View(reviews);
         }
     }

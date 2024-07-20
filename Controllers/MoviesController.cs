@@ -19,20 +19,19 @@ namespace MovieApp.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly ILogger<MoviesController> _logger;
-
         private readonly IMovieRepository _movieRepository;
         private readonly IGenreRepoository _genreRepository;
         private readonly IDirectorRepository _directorRepository;
         private readonly IActorRepository _actorRepository;
+        private readonly IReviewRepository _reviewRepository;
 
-        public MoviesController(IMovieRepository context, IGenreRepoository genreRepository, IDirectorRepository directorRepository, IActorRepository actorRepository, ILogger<MoviesController> logger)
+        public MoviesController(IMovieRepository context, IGenreRepoository genreRepository, IDirectorRepository directorRepository, IActorRepository actorRepository, IReviewRepository reviewRepository)
         {
             _movieRepository = context;
             _genreRepository = genreRepository;
             _directorRepository = directorRepository;
             _actorRepository = actorRepository;
-            _logger = logger;
+            _reviewRepository = reviewRepository;
         }
 
         public async Task<IActionResult> Details(long? id)
@@ -98,6 +97,33 @@ namespace MovieApp.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddReview(long movieId, int rating, string content)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var review = new Review
+                {
+                    MovieId = movieId,
+                    UserId = long.Parse(userId),
+                    Rating = rating,
+                    Content = content,
+                    CreatedDate = DateOnly.FromDateTime(DateTime.Now)
+                };
+
+                // Save the review to the database
+                _reviewRepository.SaveReview(review);
+
+                // Redirect back to the movie details page
+                return RedirectToAction("Details", new { id = movieId });
+            }
+
+            return RedirectToAction("Login", "Users"); // Redirect to login if the user is not authenticated
+        }
+
 
         private async Task<string> SaveImageAsync(IFormFile imageFile)
         {

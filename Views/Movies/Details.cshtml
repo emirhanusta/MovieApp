@@ -1,7 +1,8 @@
 @model Movie
 
-<div class="container">
+<div class="container mt-5">
     <div class="row">
+        <!-- Film Detayları -->
         <div class="col-lg-4 col-md-6 col-sm-12">
             <img src="~/img/@Model.Image" class="img-fluid rounded" alt="@Model.Title">
         </div>
@@ -9,81 +10,157 @@
             <h1 class="h3">@Model.Title</h1>
             Directed by <a asp-action="Details" asp-controller="Director" asp-route-id="@Model.DirectorId"
                 class="btn btn-link">@Model.Director.Name</a>
-            <div>
+            <div class="mt-2">
                 @foreach (var genre in Model.Genres)
                 {
-                    <a asp-action="List" asp-controller="Genre" asp-route-id="@genre.Id" class="badge badge-secondary">
-                        <span class="text-black">@genre.Name</span>
-                    </a>
+                    <a asp-action="List" asp-controller="Genre" asp-route-id="@genre.Id"
+                        class="badge bg-secondary text-decoration-none me-1">@genre.Name</a>
                 }
             </div>
-
-            <p>@Model.Description</p>
+            <p class="mt-3">@Model.Description</p>
             <p class="text-muted">Release Date: @Model.ReleaseDate.ToShortDateString()</p>
-            <div>
+            <div class="mt-2">
                 @foreach (var actor in Model.Actors ?? Enumerable.Empty<Actor>())
                 {
-                    <a asp-action="Details" asp-controller="Actor" asp-route-id="@actor.Id" class="badge badge-secondary">
-                        <span class="text-black font-weight-bold">@actor.Name</span>
-                    </a>
+                    <a asp-action="Details" asp-controller="Actor" asp-route-id="@actor.Id"
+                        class="badge bg-secondary text-decoration-none me-1">@actor.Name</a>
                 }
             </div>
             <a asp-action="Index" asp-controller="Home" class="btn btn-primary mt-3">Back to Home</a>
         </div>
     </div>
 
-<div class="container mt-5">
-    <h2 class="h4">Popular Reviews</h2>
-    <div class="row">
-        @foreach (var review in Model.Reviews)
-        {
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                <div class="card h-100 text-white bg-dark">
-                    <div class="card-header d-flex align-items-center bg-dark">
-                        <a href="/profile/@review.User.Username" class="d-flex align-items-center">
-                            <img src="~/img/@review.User.Image" class="rounded-circle me-2"
-                                style="width: 30px; height: 30px;" alt="@review.User.Username">
+    <!-- Yorumlar Bölümü -->
+    <div class="bg-light mt-3 p-4 rounded">
+        <div class="card border-0">
+            <div class="card-header pb-0">
+                <h4><span id="reviewCount">@Model.Reviews.Count()</span> adet yorum var.</h4>
+            </div>
+            <div class="card-body">
+                <div id="review">
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <div class="my-4 d-flex">
+                            <img src="~/img/@review.User.Image" alt="" class="avatar rounded-circle me-3"
+                                style="width: 50px; height: 50px;">
                             <div>
-                                <h5 class="card-title mb-0 text-white" style="font-size: 0.9rem;">@review.User.Username</h5>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div>
-                                <img src="~/img/@review.Movie.Image" class="img-fluid me-2" style="width: 60px;"
-                                    alt="@review.Movie.Title">
-                            </div>
-                            <div>
-                                <h5 class="card-title mb-0 text-white" style="font-size: 0.8rem;">@review.Movie.Title <span
-                                        class="text-muted">@review.Movie.ReleaseDate.ToString("yyyy")</span></h5>
-                                <div class="text-warning my-1" style="font-size: 0.7rem;">
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        if (i < @review.Rating)
+                                <div class="mb-2 d-flex align-items-center">
+                                    <h6 class="me-2"><a href="/profile/@review.User.Username">Reviewed by
+                                            @review.User.Username</a></h6>
+                                    <span class="text-muted">@review.CreatedDate</span>
+                                </div>
+                                <p>@review.Content</p>
+                                <div class="d-flex align-items-center mt-2">
+                                    <div class="star-rating readonly">
+                                        @for (int i = 1; i <= 5; i++)
                                         {
-                                            <i class="fas fa-star"></i>
+                                            if (i <= review.Rating)
+                                            {
+                                                <i class="bi bi-star-fill text-warning"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="bi bi-star-fill text-muted"></i>
+                                            }
                                         }
-                                        else if (i == @review.Rating && @review.Rating % 1 != 0)
-                                        {
-                                            <i class="fas fa-star-half-alt"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="far fa-star"></i>
-                                        }
-                                    }
+                                    </div>
+                                    <div class="d-flex align-items-center ms-3">
+                                        <button class="btn btn-link like-button" data-review-id="@review.Id">
+                                            <i class="bi bi-heart"></i>
+                                        </button>
+                                        <span class="like-count" id="like-count-@review.Id">@review.Likes.Count</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <p class="card-text mt-2" style="font-size: 0.8rem;">@review.Content</p>
-                    </div>
-                    <div class="card-footer bg-dark d-flex justify-content-between">
-                        <span class="text-muted" style="font-size: 0.7rem;">@review.CreatedDate</span>
-                        <span class="text-muted" style="font-size: 0.7rem;"><i class="bi bi-heart"> </i>@review.Likes.Count</span>
-                    </div>
+                    }
                 </div>
+                @if (User.Identity!.IsAuthenticated)
+                {
+                    <hr class="my-4">
+                    <div>
+                        <h4 class="mb-3">Yorum Ekle</h4>
+                        <form asp-action="AddReview" method="post">
+                            <input type="hidden" name="MovieId" value="@Model.Id" />
+                            <div class="mb-3">
+                                <label for="Rating" class="form-label">Rating</label>
+                                <div class="star-rating">
+                                    <i class="bi bi-star-fill" data-value="1"></i>
+                                    <i class="bi bi-star-fill" data-value="2"></i>
+                                    <i class="bi bi-star-fill" data-value="3"></i>
+                                    <i class="bi bi-star-fill" data-value="4"></i>
+                                    <i class="bi bi-star-fill" data-value="5"></i>
+                                </div>
+                                <input type="hidden" id="Rating" name="Rating" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="Content" class="form-label">Yorum</label>
+                                <textarea id="Content" name="Content" rows="3" class="form-control" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please provide your review content.
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <p>Yorum yapabilmek için giriş yapmalısınız. <a href="/users/login">Giriş Yap</a></p>
+                }
             </div>
-        }
+        </div>
     </div>
-</div>
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                // Star rating click event
+                $('.star-rating:not(.readonly) i').on('click', function () {
+                    var rating = $(this).data('value');
+                    $('#Rating').val(rating);
+                    $(this).siblings().removeClass('text-warning').addClass('text-muted');
+                    $(this).prevAll().addBack().removeClass('text-muted').addClass('text-warning');
+                });
+
+                // Like button click event
+                $('.like-button').click(function () {
+                    var reviewId = $(this).data('review-id');
+                    var likeCountElement = $('#like-count-' + reviewId);
+
+                    $.ajax({
+                        url: '@Url.Action("Like", "Review")',
+                        type: 'POST',
+                        data: { reviewId: reviewId },
+                        headers: {
+                            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (response) {
+                            likeCountElement.text(response.likeCount);
+                        },
+                        error: function () {
+                            alert('Like işlemi başarısız oldu.');
+                        }
+                    });
+                });
+            });
+        </script>
+        <style>
+            .star-rating i {
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+
+            .star-rating.readonly i {
+                cursor: default;
+            }
+
+            .text-warning {
+                color: #ffc107 !important;
+            }
+
+            .text-muted {
+                color: #e4e5e9 !important;
+            }
+        </style>
+    }

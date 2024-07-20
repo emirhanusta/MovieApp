@@ -18,5 +18,11 @@ namespace MovieApp.Data.Concrete
         }
         
         public IQueryable<Review> Reviews => _context.Reviews;
+
+        public void SaveReview(Review entity)
+        {
+            _context.Reviews.Add(entity);
+            _context.SaveChanges();
+        }
     }
 }
