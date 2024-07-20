@@ -19,18 +19,20 @@ namespace MovieApp.Controllers
 {
     public class MoviesController : Controller
     {
+        private readonly ILogger<MoviesController> _logger;
 
         private readonly IMovieRepository _movieRepository;
         private readonly IGenreRepoository _genreRepository;
         private readonly IDirectorRepository _directorRepository;
         private readonly IActorRepository _actorRepository;
 
-        public MoviesController(IMovieRepository context, IGenreRepoository genreRepository, IDirectorRepository directorRepository, IActorRepository actorRepository)
+        public MoviesController(IMovieRepository context, IGenreRepoository genreRepository, IDirectorRepository directorRepository, IActorRepository actorRepository, ILogger<MoviesController> logger)
         {
             _movieRepository = context;
             _genreRepository = genreRepository;
             _directorRepository = directorRepository;
             _actorRepository = actorRepository;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Details(long? id)
@@ -60,9 +62,8 @@ namespace MovieApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(MovieCreateViewModel model, long[] genreIds, long[] actorIds, IFormFile imageFile)
+        public async Task<IActionResult> Create(MovieCreateViewModel model, long[] genreIds, long[] actorIds, IFormFile imageFile)
         {
-            model.Image = ImagePath(imageFile);
             if (genreIds.Length == 0)
             {
                 ModelState.AddModelError("Genres", "At least one genre must be selected.");
@@ -75,13 +76,14 @@ namespace MovieApp.Controllers
 
             if (ModelState.IsValid)
             {
+                var imagePath = await SaveImageAsync(imageFile);
                 var movie = new Movie
                 {
                     Title = model.Title,
                     Description = model.Description,
                     ReleaseDate = model.ReleaseDate,
                     DirectorId = model.DirectorId,
-                    Image = model.Image,
+                    Image = imagePath,
                     Genres = _genreRepository.Genres.Where(g => genreIds.Contains(g.Id)).ToList(),
                     Actors = _actorRepository.Actors.Where(a => actorIds.Contains(a.Id)).ToList()
                 };
@@ -97,45 +99,43 @@ namespace MovieApp.Controllers
             return View(model);
         }
 
-        private string ImagePath(IFormFile imageFile)
+        private async Task<string> SaveImageAsync(IFormFile imageFile)
         {
-            var allowenExtensions = new[] { ".jpg", ".png", ".jpeg" };
-            var randomfileName = string.Empty;
-            if (imageFile != null)
+            var allowedExtensions = new[] { ".jpg", ".png", ".jpeg" };
+            var randomFileName = string.Empty;
+
+            if (imageFile != null && imageFile.Length > 0)
             {
                 var extension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
-                if (!allowenExtensions.Contains(extension))
+                if (!allowedExtensions.Contains(extension))
                 {
-                    ModelState.AddModelError("", "Geçerli bir resim seçiniz.");
+                    ModelState.AddModelError("ImageFile", "Please select a valid image file.");
                 }
                 else
                 {
-                    randomfileName = string.Format($"{Guid.NewGuid().ToString()}{extension}");
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", randomfileName);
+                    randomFileName = $"{Guid.NewGuid()}{extension}";
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", randomFileName);
 
                     try
                     {
                         using (var stream = new FileStream(path, FileMode.Create))
                         {
-                            imageFile.CopyToAsync(stream);
+                            await imageFile.CopyToAsync(stream);
                         }
                     }
                     catch
                     {
-                        ModelState.AddModelError("", "Dosya yüklenirken bir hata oluştu.");
-                    }
-
-                    if (!allowenExtensions.Contains(extension))
-                    {
-                        ModelState.AddModelError("", "Geçerli bir resim seçiniz.");
+                        ModelState.AddModelError("ImageFile", "An error occurred while uploading the file.");
                     }
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Bir resim dosyası seçiniz.");
+                ModelState.AddModelError("ImageFile", "Please select an image file.");
             }
-            return randomfileName;
+
+            return randomFileName;
         }
+
     }
 }

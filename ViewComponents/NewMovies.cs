@@ -19,7 +19,7 @@ namespace MovieApp.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var movies = await _movieRepository.Movies.OrderBy(m => m.CreatedDate).Take(10).ToListAsync();
+            var movies = await _movieRepository.Movies.OrderBy(m => m.CreatedDate).Take(100).ToListAsync();
             return View(movies);
         }
     }
