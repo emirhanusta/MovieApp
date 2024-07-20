@@ -2,3 +2,11 @@
 a {
     text-decoration: none !important;
   }
+
+.like-button {
+  color: #e4e5e9 !important; /* varsayılan gri renk */
+}
+
+.like-button.liked {
+  color: #dc3545 !important; /* kırmızı renk */
+}

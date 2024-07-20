@@ -1,5 +1,7 @@
 @model Movie
 
+@using System.Security.Claims
+
 <div class="container mt-5">
     <div class="row">
         <!-- Film Detayları -->
@@ -66,7 +68,14 @@
                                     </div>
                                     <div class="d-flex align-items-center ms-3">
                                         <button class="btn btn-link like-button" data-review-id="@review.Id">
-                                            <i class="bi bi-heart"></i>
+                                            @if (review.Likes.Any(l => l.UserId == Convert.ToInt64(User.FindFirstValue(ClaimTypes.NameIdentifier))))
+                                            {
+                                                <i class="bi bi-heart-fill text-danger"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="bi bi-heart text-danger"></i>
+                                            }
                                         </button>
                                         <span class="like-count" id="like-count-@review.Id">@review.Likes.Count</span>
                                     </div>
@@ -115,7 +124,6 @@
     @section Scripts {
         <script>
             $(document).ready(function () {
-                // Star rating click event
                 $('.star-rating:not(.readonly) i').on('click', function () {
                     var rating = $(this).data('value');
                     $('#Rating').val(rating);
@@ -123,25 +131,23 @@
                     $(this).prevAll().addBack().removeClass('text-muted').addClass('text-warning');
                 });
 
-                // Like button click event
-                $('.like-button').click(function () {
-                    var reviewId = $(this).data('review-id');
-                    var likeCountElement = $('#like-count-' + reviewId);
-
-                    $.ajax({
-                        url: '@Url.Action("Like", "Review")',
-                        type: 'POST',
-                        data: { reviewId: reviewId },
-                        headers: {
-                            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
-                        },
-                        success: function (response) {
-                            likeCountElement.text(response.likeCount);
-                        },
-                        error: function () {
-                            alert('Like işlemi başarısız oldu.');
-                        }
-                    });
+                $('.like-button').on('click', function () {
+                    var button = $(this);
+                    var reviewId = button.data('review-id');
+                    $.post('/review/Like', { reviewId: reviewId })
+                        .done(function (data) {
+                            // Burada simgenin durumunu güncelleyin
+                            if (button.find('i').hasClass('bi-heart')) {
+                                button.find('i').removeClass('bi-heart').addClass('bi-heart-fill');
+                            } else {
+                                button.find('i').removeClass('bi-heart-fill').addClass('bi-heart');
+                            }
+                            // Beğenme sayısını güncelleyin
+                            $('#like-count-' + reviewId).text(data.likeCount);
+                        })
+                        .fail(function () {
+                            alert('Something went wrong.');
+                        });
                 });
             });
         </script>
@@ -161,6 +167,20 @@
 
             .text-muted {
                 color: #e4e5e9 !important;
+            }
+
+            .like-button i {
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: #dc3545; /* Kırmızı renk */
+            }
+
+            .like-button .bi-heart {
+                color: #e4e5e9; /* Varsayılan gri renk */
+            }
+
+            .like-button .bi-heart-fill {
+                color: #dc3545; /* Beğenildiğinde kırmızı renk */
             }
         </style>
     }
