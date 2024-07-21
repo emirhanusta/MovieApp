@@ -51,7 +51,8 @@ namespace MovieApp.Controllers
                 Name = watchlist.Name,
                 Description = watchlist.Description,
                 UserId = Convert.ToInt64(userId),
-                Movies = _movieRepository.Movies.Where(m => movieIds.Contains(m.Id)).ToList()
+                Movies = _movieRepository.Movies.Where(m => movieIds.Contains(m.Id)).ToList(),
+                CreatedDate = new DateTime(),
             };
             _watchlistRepository.AddWatchlist(newWatchlist);
             return RedirectToAction("Index");
@@ -63,6 +64,7 @@ namespace MovieApp.Controllers
             return View(watchlist);
         }
 
+        [Authorize (Roles = "Admin")]
         public IActionResult Edit(long id)
         {
             var watchlist = _watchlistRepository.Watchlists.Include(w => w.Movies).FirstOrDefault(w => w.Id == id);
@@ -104,7 +106,7 @@ namespace MovieApp.Controllers
                 watchlist.Name = watchlistEditViewModel.Name;
                 watchlist.Description = watchlistEditViewModel.Description;
                 watchlist.Movies = _movieRepository.Movies.Where(m => movieIds.Contains(m.Id)).ToList();
-
+                watchlist.UpdatedDate = DateTime.Now;
                 _watchlistRepository.UpdateWatchlist(watchlist);
                 return RedirectToAction("Details", new { id = watchlist.Id });
             }
@@ -120,7 +122,12 @@ namespace MovieApp.Controllers
 
         public IActionResult Delete(long id)
         {
-            _watchlistRepository.DeleteWatchlist(id);
+            var watchlist = _watchlistRepository.Watchlists.FirstOrDefault(w => w.Id == id);
+            if (watchlist == null)
+            {
+                return NotFound();
+            }
+            _watchlistRepository.DeleteWatchlist(watchlist);
             return RedirectToAction("Index");
         }
     }

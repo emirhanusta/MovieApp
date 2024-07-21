@@ -3,7 +3,10 @@
 <div class="container">
     <div class="d-flex justify-content-between">
         <h2 >@Model.Name</h2>
-        <a asp-action="Edit" asp-route-id="@Model.Id" asp-controller="Watchlist" class="btn btn-primary">Edit Watchlist</a>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+        </div>
     </div>
     <p class="text-muted">@Model.Description</p>
     <hr />

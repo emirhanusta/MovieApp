@@ -26,14 +26,10 @@ namespace MovieApp.Data.Concrete
             _context.SaveChanges();
         }
 
-        public void DeleteWatchlist(long watchlistId)
+        public void DeleteWatchlist(Watchlist watchlist)
         {
-            var watchlist = _context.Wachlists.FirstOrDefault(w => w.Id == watchlistId);
-            if (watchlist != null)
-            {
-                _context.Wachlists.Remove(watchlist);
-                _context.SaveChanges();
-            }
+            _context.Wachlists.Remove(watchlist);
+            _context.SaveChanges();
         }
 
         public void UpdateWatchlist(Watchlist watchlist)

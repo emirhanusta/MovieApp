@@ -11,7 +11,7 @@ namespace MovieApp.Data.Abstract
         IQueryable<Watchlist> Watchlists { get; }
 
         void AddWatchlist(Watchlist watchlist);
-        void DeleteWatchlist(long watchlistId);
+        void DeleteWatchlist(Watchlist watchlist);
         void UpdateWatchlist(Watchlist watchlist);
     }
 }
