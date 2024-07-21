@@ -1,0 +1,41 @@
+@model IEnumerable<Director>
+
+<div class="container mt-5">
+    <h2 class="h4">Directors</h2>
+    <hr />
+    <form method="get" asp-controller="Director" asp-action="Index">
+        <div class="input-group mb-3" style="max-width: 400px;">
+            <input type="text" class="form-control" placeholder="Search by name or biography" name="searchString" value="@ViewData["CurrentFilter"]">
+            <div class="input-group-append" style="margin-left: 5px;">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+    <a asp-action="Create" class="btn btn-primary mb-3">Create New Director</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Biography</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var director in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="~/img/@director.Image" class="img-fluid rounded" alt="@director.Name" style="width: 100px; height: auto;">
+                    </td>
+                    <td>@director.Name</td>
+                    <td>@director.Biography</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@director.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@director.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

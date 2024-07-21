@@ -19,6 +19,22 @@ namespace MovieApp.Data.Concrete
 
         public IQueryable<Director> Directors => _context.Directors;
 
-    
+        public void AddDirector(Director director)
+        {
+            _context.Directors.Add(director);
+            _context.SaveChanges();
+        }
+
+        public void UpdateDirector(Director director)
+        {
+            _context.Update(director);
+            _context.SaveChanges();
+        }
+
+        public void DeleteDirector(Director director)
+        {
+            _context.Directors.Remove(director);
+            _context.SaveChanges();
+        }
     }
 }

@@ -1,0 +1,35 @@
+@model Director
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-warning text-white">
+            <h2 class="mb-0">Edit Director</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Name" class="form-label">Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Biography" class="form-label">Biography</label>
+                    <textarea asp-for="Biography" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Biography" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Current Image</label>
+                    <div>
+                        <img src="~/img/@Model.Image" class="img-fluid rounded mb-3" alt="@Model.Name" style="max-width: 150px;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="imageFile" class="form-label">New Image</label>
+                    <input type="file" id="imageFile" name="imageFile" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
