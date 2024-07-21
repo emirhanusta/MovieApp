@@ -1,0 +1,46 @@
+@model List<Watchlist>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between">
+        <h2 class="text-muted">YOUR LISTS</h2>
+        <a asp-action="Create" asp-controller="Watchlist" class="btn btn-primary">Create New Watchlist</a>
+    </div>
+    <hr/>
+    <div class="row mt-3">
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (var watchlist in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <a asp-action="Details" asp-controller="Watchlist" asp-route-id="@watchlist.Id">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    @if (watchlist.Movies != null && watchlist.Movies.Count > 0)
+                                    {
+                                        @foreach (var movie in watchlist.Movies.Take(3))
+                                        {
+                                            <img src="~/img/@movie.Image" class="img-thumbnail me-2" alt="@movie.Title" style="width: 60px; height: 90px;" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p>No movies in this watchlist.</p>
+                                    }
+                                    <div class="ms-2">
+                                        <h5>@watchlist.Name</h5>
+                                        <p class="text-muted">@watchlist.Movies.Count movies</p>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </a>     
+                </div>
+            }
+        }
+        else
+        {
+            <p>You do not have any watchlists.</p>
+        }
+    </div>
+</div>

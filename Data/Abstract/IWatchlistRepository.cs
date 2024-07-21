@@ -8,6 +8,10 @@ namespace MovieApp.Data.Abstract
 {
     public interface IWatchlistRepository
     {
-        IQueryable<Watchlist> GetAll();
+        IQueryable<Watchlist> Watchlists { get; }
+
+        void AddWatchlist(Watchlist watchlist);
+        void DeleteWatchlist(long watchlistId);
+        void UpdateWatchlist(Watchlist watchlist);
     }
 }

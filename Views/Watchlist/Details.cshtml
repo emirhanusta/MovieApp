@@ -1,0 +1,23 @@
+@model Watchlist
+
+<div class="container">
+    <div class="d-flex justify-content-between">
+        <h2 >@Model.Name</h2>
+        <a asp-action="Edit" asp-route-id="@Model.Id" asp-controller="Watchlist" class="btn btn-primary">Edit Watchlist</a>
+    </div>
+    <p class="text-muted">@Model.Description</p>
+    <hr />
+    <p class="text-muted">@Model.Movies.Count movies</p>
+    <div class="row">
+        @foreach (var movie in Model.Movies)
+        {
+            <div class="col-lg-2 col-md-4 col-sm-4 col-12 mb-4">
+                <div class="card bg-transparent border-0">
+                    <a asp-action="Details" asp-route-id="@movie.Id" asp-controller="Movies">
+                        <img src="~/img/@movie.Image" class="card-img-top img-thumbnail rounded" alt="@movie.Title">
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

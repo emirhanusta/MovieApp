@@ -1,0 +1,44 @@
+@model WatchlistCreateViewModel
+
+<div class="container mt-5">
+    <h1>Create New Watchlist</h1>
+    <form asp-action="Create" asp-controller="Watchlist" method="post">
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input type="text" name="Name" class="form-control" asp-for="Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="Description">Description</label>
+            <input type="text" name="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Movies</label>
+            <select class="form-control select2" name="movieIds" multiple="multiple" data-placeholder="Select movies">
+                @foreach (var movie in ViewBag.Movies)
+                {
+                    <option value="@movie.Id">@movie.Title</option>
+                }
+            </select>
+            @if (ViewData.ModelState["Movies"]?.Errors.Count > 0)
+            {
+                <span class="text-danger">@ViewData.ModelState["Movies"]?.Errors[0].ErrorMessage</span>
+            }
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Create</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: function(){
+                    $(this).data('placeholder');
+                },
+                allowClear: true
+            });
+        });
+    </script>
+}
