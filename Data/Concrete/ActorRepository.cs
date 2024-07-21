@@ -18,5 +18,23 @@ namespace MovieApp.Data.Concrete
         }
 
         public IQueryable<Actor> Actors => _context.Actors;
+
+        public void AddActor(Actor actor)
+        {
+            _context.Actors.Add(actor);
+            _context.SaveChanges();
+        }
+
+        public void UpdateActor(Actor actor)
+        {
+            _context.Update(actor);
+            _context.SaveChanges();
+        }
+
+        public void DeleteActor(Actor actor)
+        {
+            _context.Actors.Remove(actor);
+            _context.SaveChanges();
+        }
     }
 }

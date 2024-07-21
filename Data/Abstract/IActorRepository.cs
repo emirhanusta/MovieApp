@@ -9,5 +9,8 @@ namespace MovieApp.Data.Abstract
     public interface IActorRepository
     {
         IQueryable<Actor> Actors { get; }
+        void AddActor(Actor actor);
+        void UpdateActor(Actor actor);
+        void DeleteActor(Actor actor);
     }
 }
