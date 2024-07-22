@@ -8,7 +8,9 @@ namespace MovieApp.Data.Abstract
 {
     public interface IMovieRepository
     {
-     IQueryable<Movie> Movies { get; }
-     void SaveMovie(Movie entity);   
+        IQueryable<Movie> Movies { get; }
+        void SaveMovie(Movie entity);
+        void UpdateMovie(Movie entity);
+        void DeleteMovie(Movie entity);
     }
 }

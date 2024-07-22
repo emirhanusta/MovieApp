@@ -1,0 +1,43 @@
+@model IEnumerable<Movie>
+
+<div class="container mt-5">
+    <h2 class="h4">Movies</h2>
+    <hr />
+    <form method="get" asp-controller="Movies" asp-action="Index">
+        <div class="input-group mb-3" style="max-width: 400px;">
+            <input type="text" class="form-control" placeholder="Search by title, description or director" name="searchString" value="@ViewData["CurrentFilter"]">
+            <div class="input-group-append" style="margin-left: 5px;">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+    <a asp-action="Create" class="btn btn-primary mb-3">Create New Movie</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Director</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="~/img/@movie.Image" class="img-fluid rounded" alt="@movie.Title" style="width: 100px; height: auto;">
+                    </td>
+                    <td>@movie.Title</td>
+                    <td>@movie.ReleaseDate.ToString("yyyy-MM-dd")</td>
+                    <td>@movie.Director?.Name</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

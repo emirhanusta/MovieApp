@@ -16,19 +16,18 @@
                 @foreach (var genre in Model.Genres)
                 {
                     <a asp-action="List" asp-controller="Genre" asp-route-id="@genre.Id"
-                        class="badge bg-secondary text-decoration-none me-1">@genre.Name</a>
+                        class="badge  text-decoration-none me-1">@genre.Name</a>
                 }
             </div>
             <p class="mt-3">@Model.Description</p>
-            <p class="text-muted">Release Date: @Model.ReleaseDate.ToShortDateString()</p>
+            <p class="">Release Date: @Model.ReleaseDate.ToShortDateString()</p>
             <div class="mt-2">
                 @foreach (var actor in Model.Actors ?? Enumerable.Empty<Actor>())
                 {
                     <a asp-action="Details" asp-controller="Actor" asp-route-id="@actor.Id"
-                        class="badge bg-secondary text-decoration-none me-1">@actor.Name</a>
+                        class="badge  text-decoration-none me-1 ">@actor.Name</a>
                 }
             </div>
-            <a asp-action="Index" asp-controller="Home" class="btn btn-primary mt-3">Back to Home</a>
         </div>
     </div>
 
@@ -49,7 +48,7 @@
                                 <div class="mb-2 d-flex align-items-center">
                                     <h6 class="me-2"><a href="/profile/@review.User.Username">Reviewed by
                                             @review.User.Username</a></h6>
-                                    <span class="text-muted">@review.CreatedDate</span>
+                                    <span class="">@review.CreatedDate.ToString("dd MMM yyyy")</span>
                                 </div>
                                 <p>@review.Content</p>
                                 <div class="d-flex align-items-center mt-2">
@@ -68,7 +67,8 @@
                                     </div>
                                     <div class="d-flex align-items-center ms-3">
                                         <button class="btn btn-link like-button" data-review-id="@review.Id">
-                                            @if (review.Likes.Any(l => l.UserId == Convert.ToInt64(User.FindFirstValue(ClaimTypes.NameIdentifier))))
+                                            @if (review.Likes.Any(l => l.UserId ==
+                                           Convert.ToInt64(User.FindFirstValue(ClaimTypes.NameIdentifier))))
                                             {
                                                 <i class="bi bi-heart-fill text-danger"></i>
                                             }
@@ -89,7 +89,7 @@
                     <hr class="my-4">
                     <div>
                         <h4 class="mb-3">Yorum Ekle</h4>
-                        <form asp-action="AddReview" method="post">
+                        <form id="reviewForm" asp-action="AddReview" method="post">
                             <input type="hidden" name="MovieId" value="@Model.Id" />
                             <div class="mb-3">
                                 <label for="Rating" class="form-label">Rating</label>
@@ -109,7 +109,7 @@
                                     Please provide your review content.
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                            <button type="submit" id="reviewSubmit" class="btn btn-primary">Kaydet</button>
                         </form>
                     </div>
                 }
@@ -122,7 +122,8 @@
     </div>
 
     @section Scripts {
-        <script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script type="text/javascript">
             $(document).ready(function () {
                 $('.star-rating:not(.readonly) i').on('click', function () {
                     var rating = $(this).data('value');
@@ -131,18 +132,58 @@
                     $(this).prevAll().addBack().removeClass('text-muted').addClass('text-warning');
                 });
 
+                $('#reviewForm').on('submit', function (event) {
+                    event.preventDefault(); // Formun varsayılan gönderimini engelle
+                    var formData = $(this).serialize();
+                    $.ajax({
+                        type: 'POST',
+                        url: $(this).attr('action'),
+                        data: formData,
+                        success: function (review) {
+                            var date = new Date(review.createdDate);
+                            var reviewHtml = `
+                            <div class="my-4 d-flex">
+                                <img src="/img/${review.user.image}" alt="" class="avatar rounded-circle float-start me-3" style="width: 50px; height: 50px;">
+                                <div>
+                                <div class="mb-2 d-flex">
+                                    <h6 class="me-2"><a href="/profile/${review.userName}">Reviewed by ${review.userName}</a></h6>
+                                    <span>${date.toLocaleDateString()}</span>
+                                </div>
+                                <p>${review.content}</p>
+                                <div class="d-flex align-items-center mt-2">
+                                    <div class="star-rating readonly">
+                                        ${[...Array(5).keys()].map(i => i < review.rating ? '<i class="bi bi-star-fill text-warning"></i>' : '<i class="bi bi-star-fill text-muted"></i>').join('')}
+                                    </div>
+                                    <div class="d-flex align-items-center ms-3">
+                                        <button class="btn btn-link like-button" data-review-id="${review.reviewId}">
+                                            <i class="bi bi-heart text-danger"></i>
+                                        </button>
+                                        <span class="like-count" id="like-count-${review.reviewId}">0</span>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>`;
+                            
+                            $("#review").append(reviewHtml);
+                            $("#Content").val('');
+                            $("#Rating").val('');
+                        },
+                        error: function () {
+                            alert('Yorum eklenirken bir hata oluştu.');
+                        }
+                    });
+                });
+
                 $('.like-button').on('click', function () {
                     var button = $(this);
                     var reviewId = button.data('review-id');
                     $.post('/review/Like', { reviewId: reviewId })
                         .done(function (data) {
-                            // Burada simgenin durumunu güncelleyin
                             if (button.find('i').hasClass('bi-heart')) {
                                 button.find('i').removeClass('bi-heart').addClass('bi-heart-fill');
                             } else {
                                 button.find('i').removeClass('bi-heart-fill').addClass('bi-heart');
                             }
-                            // Beğenme sayısını güncelleyin
                             $('#like-count-' + reviewId).text(data.likeCount);
                         })
                         .fail(function () {
@@ -172,15 +213,16 @@
             .like-button i {
                 font-size: 1.5rem;
                 cursor: pointer;
-                color: #dc3545; /* Kırmızı renk */
+                color: #dc3545;
             }
 
             .like-button .bi-heart {
-                color: #e4e5e9; /* Varsayılan gri renk */
+                color: #e4e5e9;
             }
 
             .like-button .bi-heart-fill {
-                color: #dc3545; /* Beğenildiğinde kırmızı renk */
+                color: #dc3545;
             }
         </style>
     }
+</div>

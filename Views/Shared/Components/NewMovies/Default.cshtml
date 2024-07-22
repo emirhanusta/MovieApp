@@ -1,8 +1,11 @@
 @model List<Movie>
 
 <div class="container">
-    <h1 class="h4 mb-4">New On MovieApp</h1>
-    <hr>
+    <div class="d-flex justify-content-between">
+        <h1 class="h4 ">New On MovieApp</h1>
+        <a asp-action="NewMovies" asp-controller="Movies" class="text-primary">More</a>
+    </div>
+    <hr/>
     <div class="row">
         @foreach (var movie in Model)
         {

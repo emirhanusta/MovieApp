@@ -1,0 +1,27 @@
+@model List<Movie>
+
+<div class="container">
+    <h1 class="h4 mb-4">New Movies</h1>
+    <hr>
+    <form method="get" asp-controller="Movies" asp-action="NewMovies">
+        <div class="input-group mb-3" style="max-width: 400px;">
+            <input type="text" class="form-control" placeholder="Search by title, description or director"
+                name="searchString" value="@ViewData["CurrentFilter"]">
+            <div class="input-group-append" style="margin-left: 5px;">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        @foreach (var movie in Model)
+        {
+            <div class="col-lg-2 col-md-4 col-sm-6 col-12 mb-4">
+                <div class="card bg-transparent border-0">
+                    <a asp-action="Details" asp-route-id="@movie.Id" asp-controller="Movies">
+                        <img src="~/img/@movie.Image" class="card-img-top img-thumbnail rounded" alt="@movie.Title">
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

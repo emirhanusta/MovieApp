@@ -1,29 +1,28 @@
-@model MovieCreateViewModel
+@model MovieUpdateViewModel
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-header bg-warning text-white">
-                    <h2 class="mb-0 row justify-content-center">Create Movie</h2>
+                    <h2 class="mb-0 row justify-content-center">Edit Movie</h2>
                 </div>
                 <div class="card-body">
-                    <form asp-action="Create" method="Post" enctype="multipart/form-data">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        
                         <div class="form-group">
-                            <label asp-for="Title" class="form-label"></label>
+                            <label asp-for="Title" class="form-label">Movie Title</label>
                             <input asp-for="Title" class="form-control" />
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
+
                         <div class="form-group">
-                            <label asp-for="Description" class="form-label"></label>
+                            <label asp-for="Description" class="form-label">Description</label>
                             <textarea asp-for="Description" class="form-control" rows="3"></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="ImageFile" class="form-label">Image</label>
-                            <input type="file" name="imageFile" id="imageFile" class="form-control"> 
-                            <span asp-validation-for="ImageFile" class="text-danger"></span>
-                        </div>
+
                         <div class="form-group">
                             <label asp-for="ReleaseDate" class="form-label">Release Date</label>
                             <input asp-for="ReleaseDate" type="text" class="form-control datepicker" />
@@ -40,33 +39,32 @@
 
                         <div class="form-group">
                             <label class="form-label">Genres</label>
-                            <select class="form-control select2" name="genreIds" multiple="multiple" data-placeholder="Select genres">
-                                @foreach (var genre in ViewBag.Genres)
-                                {
-                                    <option value="@genre.Id">@genre.Name</option>
-                                }
+                            <select class="form-control select2" name="GenreIds" multiple="multiple" asp-for="GenreIds" asp-items="ViewBag.Genres" data-placeholder="Select genres">
                             </select>
-                            @if (ViewData.ModelState["Genres"]?.Errors.Count > 0)
-                            {
-                                <span class="text-danger">@ViewData.ModelState["Genres"]?.Errors[0].ErrorMessage</span>  
-                            }
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">Actors</label>
-                            <select class="form-control select2" name="actorIds" multiple="multiple" data-placeholder="Select actors">
-                                @foreach (var actor in ViewBag.Actors)
-                                {
-                                    <option value="@actor.Id">@actor.Name</option>
-                                }
+                            <select class="form-control select2" name="ActorIds" multiple="multiple" asp-for="ActorIds" asp-items="ViewBag.Actors" data-placeholder="Select actors">
                             </select>
-                            @if (ViewData.ModelState["Actors"]?.Errors?.Count > 0)
-                            {
-                                <span class="text-danger">@ViewData.ModelState["Actors"]?.Errors[0].ErrorMessage</span>
-                            }
+                            <span asp-validation-for="ActorIds" class="text-danger"></span>
                         </div>
 
-                        <button type="submit" class="btn btn-primary mt-3">Create</button>
+                        <div class="form-group">
+                            <label class="form-label">Current Image</label>
+                            <div>
+                                <img src="~/img/@Model.Image" class="img-fluid rounded mb-3" alt="@Model.Title" style="max-width: 150px;" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="imageFile" class="form-label">New Image</label>
+                            <input type="file" id="imageFile" name="imageFile" class="form-control" />
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -83,12 +81,12 @@
                 },
                 allowClear: true
             });
-        });
 
-                    $('.datepicker').datepicker({
+            $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
                 autoclose: true,
                 todayHighlight: true
             });
+        });
     </script>
 }

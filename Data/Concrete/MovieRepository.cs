@@ -23,6 +23,18 @@ namespace MovieApp.Data.Concrete
             _context.Movies.Add(entity);
             _context.SaveChanges();
         }
+
+        public void UpdateMovie(Movie entity)
+        {
+            _context.Movies.Update(entity);
+            _context.SaveChanges();
+        }
+
+        public void DeleteMovie(Movie entity)
+        {
+            _context.Movies.Remove(entity);
+            _context.SaveChanges();
+        }
     }
 
 
