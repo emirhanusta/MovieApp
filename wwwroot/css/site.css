@@ -1,6 +1,7 @@
 
 a {
     text-decoration: none !important;
+    color: #000000 !important;
   }
 
 .like-button {
@@ -9,4 +10,19 @@ a {
 
 .like-button.liked {
   color: #dc3545 !important; /* kırmızı renk */
+}
+.review-content {
+  position: relative;
+}
+
+.review-content .read-more {
+  display: none;
+}
+
+.review-content.expanded .read-more {
+  display: inline;
+}
+
+.review-content.expanded {
+  white-space: normal;
 }

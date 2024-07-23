@@ -39,7 +39,7 @@
                         <a asp-controller="Users" asp-action="Logout" class="nav-link">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Movies" asp-action="Create" class="nav-link">Create Movie</a>
+                        <a asp-controller="Watchlist" asp-action="Index" class="nav-link">Watchlist</a>
                     </li>
                 }
                 else
@@ -51,14 +51,41 @@
                         <a asp-controller="Users" asp-action="Register" class="nav-link">Register</a>
                     </li>
                 }
-
-
             </ul>
         </div>
     </nav>
+    
     <div class="container mt-3">
         @RenderBody()
     </div>
+    
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <h5 >What is MovieApp</h5>
+                    <p>
+                        MovieApp is your go-to platform for discovering, reviewing, and enjoying movies. Stay tuned for the latest updates and features!
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+
+                </div>
+                <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Follow Us</h5>
+                    <a href="#" class="text-dark me-4"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-dark me-4"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-dark me-4"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-dark"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3 bg-dark text-light">
+            © 2024 MovieApp. All rights reserved.
+        </div>
+    </footer>
+
     @RenderSection("Scripts", required: false)
 </body>
 

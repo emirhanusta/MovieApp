@@ -1,79 +1,212 @@
 @model User
 
-<div class="container mt-5">
+<div class="container mt-4">
     <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-            <img src="~/img/@Model.Image" class="img-fluid rounded-circle mb-3" alt="@Model.Username">
-        </div>
-        <div class="col-lg-8 col-md-6 col-sm-12">
-            <h1 class="h3">@Model.Name</h1>
-            <p class="text-muted">@Model.Username</p>
-            <p>@Model.Biography</p>
-            <a asp-action="Index" asp-controller="Home" class="btn btn-primary mt-3">Back to Home</a>
-        </div>
-    </div>
+        <!-- Admin Panel -->
+        @if (User.FindFirstValue(ClaimTypes.Role) == "admin" && ViewBag.Username == User.Identity.Name)
+        {
+            <div class="col-lg-2 col-md-12 mt-2">
+                <h2 class="h4">Admin Panel</h2>
+                <hr />
+                <div class="row">
+                    <!-- Movies Management -->
+                    <div class="col-lg-12 mb-4">
+                        <h3 class="h5">Movies</h3>
+                        <div class="btn-group-vertical" role="group">
+                            <a asp-action="Index" asp-controller="Movies" class="btn btn-outline-primary mb-2">View All Movies</a>
+                            <a asp-action="Create" asp-controller="Movies" class="btn btn-outline-primary">Create Movie</a>
+                        </div>
+                    </div>
+                    <!-- Directors Management -->
+                    <div class="col-lg-12 mb-4">
+                        <h3 class="h5">Directors</h3>
+                        <div class="btn-group-vertical" role="group">
+                            <a asp-action="Index" asp-controller="Director" class="btn btn-outline-primary mb-2">View All Directors</a>
+                            <a asp-action="Create" asp-controller="Director" class="btn btn-outline-primary">Create Director</a>
+                        </div>
+                    </div>
+                    <!-- Actors Management -->
+                    <div class="col-lg-12 mb-4">
+                        <h3 class="h5">Actors</h3>
+                        <div class="btn-group-vertical" role="group">
+                            <a asp-action="Index" asp-controller="Actor" class="btn btn-outline-primary mb-2">View All Actors</a>
+                            <a asp-action="Create" asp-controller="Actor" class="btn btn-outline-primary">Create Actor</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
 
-    <div class="container mt-5">
-        <div class="row">
-            @if (Model.Reviews != null)
-            {
-                @foreach (var review in Model.Reviews)
-                {
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                        <div class="card h-100 text-white bg-dark">
-                            <div class="card-header d-flex align-items-center bg-dark">
-                                <a href="/profile/@review.User.Username" class="d-flex align-items-center">
-                                    <img src="~/img/@review.User.Image" class="rounded-circle me-3"
-                                        style="width: 40px; height: 40px;" alt="@review.User.Username">
-                                    <div>
-                                        <h5 class="card-title mb-0 text-white" style="font-size: 1rem;">@review.User.Username
-                                        </h5>
+        <!-- User Profile Image and Info -->
+        <div class="col-lg-2 col-md-6 col-sm-12 text-center">
+            <img src="~/img/@Model.Image" class="img-fluid rounded-circle mb-3" alt="@Model.Username" style="max-width: 150px;">
+            <h3 class="mt-3">@Model.Name</h3>
+            <!-- Edit and Delete Actions -->
+            <div class="mt-3">
+                <a href="@Url.Action("Edit", "Users", new { id = Model.Id })" class="btn btn-warning me-2">Edit</a>
+                <a href="@Url.Action("Delete", "Users", new { id = Model.Id })" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+
+        <!-- Tabs for User Reviews and User Likes -->
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            <div class="mt-3">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="true">User Reviews</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="likes-tab" data-bs-toggle="tab" data-bs-target="#likes" type="button" role="tab" aria-controls="likes" aria-selected="false">User Likes</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                        <!-- Reviews Section -->
+                        <div class="mt-3">
+                            <hr />
+                            <div class="row">
+                                @if (Model.Reviews.Any())
+                                {
+                                    @foreach (var review in Model.Reviews)
+                                    {
+                                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                                            <div class="card h-100">
+                                                <div class="card-header d-flex align-items-center">
+                                                    <a href="/profile/@review.User.Username" class="d-flex align-items-center">
+                                                        <img src="~/img/@review.User.Image" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="@review.User.Username">
+                                                        <div>
+                                                            <h5 class="card-title mb-0" style="font-size: 1rem;">@review.User.Username</h5>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="card-body">
+                                                    <a asp-action="Details" asp-controller="Movies" asp-route-id="@review.Movie.Id">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="me-3">
+                                                                <img src="~/img/@review.Movie.Image" class="img-fluid" style="width: 80px;" alt="@review.Movie.Title">
+                                                            </div>
+                                                            <div>
+                                                                <h5 class="card-title mb-0" style="font-size: 1rem;">
+                                                                    @review.Movie.Title <span class="text-muted">@review.Movie.ReleaseDate.ToString("yyyy")</span>
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <p class="card-text mt-3 review-content">
+                                                        @Html.Raw(review.Content.Length > 50 ? review.Content.Substring(0, 50) + "..." : review.Content)
+                                                    </p>
+                                                    @if (review.Content.Length > 100)
+                                                    {
+                                                        <a href="#" class="text-primary read-more" data-bs-toggle="modal" data-bs-target="#reviewModal" data-content="@Html.Raw(review.Content)">Read more</a>
+                                                    }
+                                                </div>
+                                                <div class="card-footer d-flex justify-content-between">
+                                                    <span class="text-muted" style="font-size: 0.9rem;">@review.CreatedDate.ToString("dd MMM yyyy")</span>
+                                                    <span class="text-muted" style="font-size: 0.9rem;">
+                                                        <i class="bi bi-heart"></i> @review.Likes.Count
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-12">
+                                        <p>No reviews yet.</p>
                                     </div>
-                                </a>
-                            </div>
-                            <div class="card-body d-flex">
-                                <div>
-                                    <img src="~/img/@review.Movie.Image" class="img-fluid me-3" style="width: 100px;"
-                                        alt="@review.Movie.Title">
-                                </div>
-                                <div>
-                                    <h5 class="card-title mb-0 text-white">@review.Movie.Title <span
-                                            class="text-muted">@review.Movie.ReleaseDate.ToString("yyyy")</span></h5>
-                                    <div class="text-warning my-2">
-                                        <p class="card-text">
-                                            @for (int i = 0; i < 5; i++)
-                                            {
-                                                if (i < @review.Rating)
-                                                {
-                                                    <i class="fas fa-star"></i>
-                                                }
-                                                else if (i == @review.Rating && @review.Rating % 1 != 0)
-                                                {
-                                                    <i class="fas fa-star-half-alt"></i>
-                                                }
-                                                else
-                                                {
-                                                    <i class="far fa-star"></i>
-                                                }
-                                            }
-                                    </div>
-                                    <p class="card-text">@review.Content</p>
-                                </div>
-                            </div>
-                            <div class="card-footer bg-dark d-flex justify-content-between">
-                                <span class="text-muted" style="font-size: 0.9rem;">@review.CreatedDate</span>
-                                <span class="text-muted" style="font-size: 0.9rem; float: right;"><i
-                                        class="bi bi-heart"></i>@review.Likes.Count</span>
+                                }
                             </div>
                         </div>
                     </div>
-                }
-            }
-            else
-            {
-                <div class="col-12">
-                    <p>No reviews yet.</p>
+                    <div class="tab-pane fade" id="likes" role="tabpanel" aria-labelledby="likes-tab">
+                        <!-- Likes Section -->
+                        <div class="mt-3">
+                            <hr />
+                            <div class="row">
+                                @if (Model.Likes.Any())
+                                {
+                                    @foreach (var like in Model.Likes)
+                                    {
+                                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                                            <div class="card h-100">
+                                                <div class="card-header d-flex align-items-center">
+                                                    <a href="/profile/@like.Review.User.Username" class="d-flex align-items-center">
+                                                        <img src="~/img/@like.Review.User.Image" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="@like.Review.User.Username">
+                                                        <div>
+                                                            <h5 class="card-title mb-0" style="font-size: 1rem;">@like.Review.User.Username</h5>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="card-body">
+                                                    <a asp-action="Details" asp-controller="Movies" asp-route-id="@like.Review.MovieId">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="me-3">
+                                                                <img src="~/img/@like.Review.Movie.Image" class="img-fluid" style="width: 80px;" alt="@like.Review.Movie.Title">
+                                                            </div>
+                                                            <div>
+                                                                <h5 class="card-title mb-0" style="font-size: 1rem;">
+                                                                    @like.Review.Movie.Title <span class="text-muted">@like.Review.Movie.ReleaseDate.ToString("yyyy")</span>
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <p class="card-text mt-3 review-content">
+                                                        @Html.Raw(like.Review.Content.Length > 50 ? like.Review.Content.Substring(0, 50) + "..." : like.Review.Content)
+                                                    </p>
+                                                    @if (like.Review.Content.Length > 100)
+                                                    {
+                                                        <a href="#" class="text-primary read-more" data-bs-toggle="modal" data-bs-target="#reviewModal" data-content="@Html.Raw(like.Review.Content)">Read more</a>
+                                                    }
+                                                </div>
+                                                <div class="card-footer d-flex justify-content-between">
+                                                    <span class="text-muted" style="font-size: 0.9rem;">@like.Review.CreatedDate.ToString("dd MMM yyyy")</span>
+                                                    <span class="text-muted" style="font-size: 0.9rem;">
+                                                        <i class="bi bi-heart"></i> @like.Review.Likes.Count
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-12">
+                                        <p>No likes yet.</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            }
+            </div>
         </div>
     </div>
+
+    <!-- Review Content Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">Review Content</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="reviewContent"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Populate the modal with review content
+        $('#reviewModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var content = button.data('content');
+            var modal = $(this);
+            modal.find('.modal-body #reviewContent').html(content);
+        });
+    </script>
+}

@@ -28,6 +28,7 @@ namespace MovieApp.Controllers
             _movieRepository = movieRepository;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -43,6 +44,7 @@ namespace MovieApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(WatchlistCreateViewModel watchlist, long[] movieIds)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -58,13 +60,14 @@ namespace MovieApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Details(long id)
         {
             var watchlist = _watchlistRepository.Watchlists.Include(w => w.Movies).FirstOrDefault(w => w.Id == id);
             return View(watchlist);
         }
 
-        [Authorize (Roles = "Admin")]
+        [Authorize]
         public IActionResult Edit(long id)
         {
             var watchlist = _watchlistRepository.Watchlists.Include(w => w.Movies).FirstOrDefault(w => w.Id == id);
@@ -93,6 +96,7 @@ namespace MovieApp.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public IActionResult Edit(WatchlistEditViewModel watchlistEditViewModel, long[] movieIds)
         {
             if (ModelState.IsValid)
@@ -119,7 +123,7 @@ namespace MovieApp.Controllers
             return View(watchlistEditViewModel);
         }
 
-
+        [Authorize]
         public IActionResult Delete(long id)
         {
             var watchlist = _watchlistRepository.Watchlists.FirstOrDefault(w => w.Id == id);

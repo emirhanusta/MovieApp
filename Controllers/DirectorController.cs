@@ -116,7 +116,7 @@ namespace MovieApp.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Delete(long? id)
+        public IActionResult Delete(long? id)
         {
             var director = _directorRepository.Directors.FirstOrDefault(w => w.Id == id);
             if (director == null)

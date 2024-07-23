@@ -179,6 +179,7 @@ namespace MovieApp.Controllers
             return View(await movies.Include(m => m.Reviews).OrderByDescending(m => m.Reviews.Count).ToListAsync());
         }
 
+        [Authorize (Roles = "admin")]
         public async Task<IActionResult> Edit(long id)
         {
             var movie = await _movieRepository.Movies.Include(m => m.Director).Include(m => m.Genres).Include(m => m.Actors).FirstOrDefaultAsync(m => m.Id == id);
@@ -208,6 +209,7 @@ namespace MovieApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize (Roles = "admin")]
         public async Task<IActionResult> Edit(MovieUpdateViewModel model, long[] genreIds, long[] actorIds, IFormFile? imageFile)
         {
             if (ModelState.IsValid)
@@ -237,10 +239,9 @@ namespace MovieApp.Controllers
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("yarrağı yedin");
                     return View(model);
                 }
-                return RedirectToAction(nameof(Index)); // Redirect to a list or details page
+                return RedirectToAction(nameof(Index)); 
             }else{
                 Console.WriteLine("Model state is not valid");
             }
@@ -251,6 +252,7 @@ namespace MovieApp.Controllers
 
             return View(model);
         }
+
         [Authorize(Roles = "admin")]
         public IActionResult Delete(long? id)
         {

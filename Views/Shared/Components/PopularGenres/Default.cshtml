@@ -7,7 +7,7 @@
         {
             <a asp-action="List" asp-controller="Genre" asp-route-id="@genre.Id" class="list-group-item list-group-item-action">
                 @genre.Name
-                <span class="badge badge-primary badge-pill">@genre.Movies.Count</span>
+                <span class="text-muted">@genre.Movies.Count</span>
             </a>
         }
     </div>

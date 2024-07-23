@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieApp.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MovieApp.Controllers
 {
@@ -58,6 +59,7 @@ namespace MovieApp.Controllers
             }
             return View(model);
         }
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -109,6 +111,7 @@ namespace MovieApp.Controllers
             return View(model);
         }
 
+        [Authorize]
         public IActionResult Profile(string username)
         {
             if (string.IsNullOrEmpty(username))
@@ -116,18 +119,49 @@ namespace MovieApp.Controllers
                 return NotFound();
             }
             var user = _userRepository
-                       .Users
-                       .Include(x => x.Reviews)
-                       .ThenInclude(x => x.Movie)
-                        .Include(x => x.Reviews)
-                       .ThenInclude(x => x.Likes)
-                       .FirstOrDefault(x => x.Username == username);
+            .Users
+            .Include(x => x.Reviews)
+                .ThenInclude(x => x.Movie)
+            .Include(x => x.Reviews)
+                .ThenInclude(x => x.Likes)
+            .Include(x => x.Likes)
+                .ThenInclude(x => x.Review)
+                    .ThenInclude(x => x.Movie)
+            .Include(x => x.Likes)
+                .ThenInclude(x => x.Review)
+                    .ThenInclude(x => x.User)
+            .FirstOrDefault(x => x.Username == username);
 
             if (user == null)
             {
                 return NotFound();
             }
+            ViewBag.Username = username;
             return View(user);
+        }
+
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var user = _userRepository.Users.FirstOrDefault(x => x.Id == id);
+            if (user != null)
+            {
+                return View(user);
+            }
+            return NotFound();
+        }
+        
+
+        public IActionResult Delete(int id)
+        {
+            var user = _userRepository.Users.FirstOrDefault(x => x.Id == id);
+            Logout();
+            if (user != null)
+            {
+                _userRepository.DeleteUser(user);
+                return RedirectToAction("Login");
+            }
+            return NotFound();
         }
     }
 }

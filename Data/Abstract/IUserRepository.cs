@@ -10,5 +10,7 @@ namespace MovieApp.Data.Abstract
     {
         IQueryable<User> Users { get; }
         void AddUser(User entity);
+        void DeleteUser(User entity);
+        void UpdateUser(User entity);
     }
 }

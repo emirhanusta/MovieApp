@@ -6,55 +6,74 @@
         @foreach (var review in Model)
         {
             <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
-                <div class="card h-100 text-white bg-dark">
-                    <div class="card-header d-flex align-items-center bg-dark">
+                <div class="card h-100">
+                    <div class="card-header d-flex align-items-center">
                         <a href="/profile/@review.User.Username" class="d-flex align-items-center">
                             <img src="~/img/@review.User.Image" class="rounded-circle me-3"
                                 style="width: 40px; height: 40px;" alt="@review.User.Username">
                             <div>
-                                <h5 class="card-title mb-0 text-white" style="font-size: 1rem;">@review.User.Username</h5>
+                                <h5 class="card-title mb-0" style="font-size: 1rem;">@review.User.Username</h5>
                             </div>
                         </a>
                     </div>
-
                     <div class="card-body">
-                        <div class="d-flex">
-                            <div>
-                                <img src="~/img/@review.Movie.Image" class="img-fluid me-3" style="width: 80px;"
-                                    alt="@review.Movie.Title">
-                            </div>
-                            <div>
-                                <h5 class="card-title mb-0 text-white" style="font-size: 1rem;">@review.Movie.Title <span
-                                        class="text-muted">@review.Movie.ReleaseDate.ToString("yyyy")</span></h5>
-                                <div class="text-warning my-2" style="font-size: 0.8rem;">
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        if (i < @review.Rating)
-                                        {
-                                            <i class="fas fa-star"></i>
-                                        }
-                                        else if (i == @review.Rating && @review.Rating % 1 != 0)
-                                        {
-                                            <i class="fas fa-star-half-alt"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="far fa-star"></i>
-                                        }
-                                    }
+                        <a asp-action="Details" asp-controller="Movies" asp-route-id="@review.Movie.Id">
+                            <div class="d-flex align-items-start">
+                                <div class="me-3">
+                                    <img src="~/img/@review.Movie.Image" class="img-fluid" style="width: 80px;"
+                                        alt="@review.Movie.Title">
+                                </div>
+                                <div>
+                                    <h5 class="card-title mb-0" style="font-size: 1rem;">
+                                        @review.Movie.Title <span
+                                            class="text-muted">@review.Movie.ReleaseDate.ToString("yyyy")</span>
+                                    </h5>
                                 </div>
                             </div>
-                        </div>
-                        <p class="card-text mt-3" style="font-size: 0.9rem;">@review.Content</p>
+                        </a>
+                        <p class="card-text mt-3 review-content">
+                            @Html.Raw(review.Content.Length > 50 ? review.Content.Substring(0, 50) + "..." : review.Content)
+                        </p>
+                        @if (review.Content.Length > 100)
+                        {
+                            <a href="#" class="text-primary read-more" data-bs-toggle="modal" data-bs-target="#reviewModal" data-content="@Html.Raw(review.Content)">Devamını oku</a>
+                        }
                     </div>
-                    <div class="card-footer bg-dark d-flex justify-content-between">
-                        <span class="text-muted" style="font-size: 0.9rem;">@review.CreatedDate</span>
+                    <div class="card-footer d-flex justify-content-between">
+                        <span class="text-muted" style="font-size: 0.9rem;">@review.CreatedDate.ToString("dd MMM yyyy")</span>
                         <span class="text-muted" style="font-size: 0.9rem; float: right;">
-                            <i class="bi bi-heart">
-                            </i>@review.Likes.Count</span>
+                            <i class="bi bi-heart"></i>@review.Likes.Count
+                        </span>
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">Full Review</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#reviewModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var content = button.data('content'); // Extract info from data-* attributes
+            var modal = $(this);
+            modal.find('.modal-body').html(content); // Use html() instead of text()
+        });
+    });
+</script>

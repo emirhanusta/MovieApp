@@ -23,5 +23,17 @@ namespace MovieApp.Data.Concrete
             _context.Users.Add(entity);
             _context.SaveChanges();
         }
+
+        public void DeleteUser(User entity)
+        {
+            _context.Users.Remove(entity);
+            _context.SaveChanges();
+        }
+
+        public void UpdateUser(User entity)
+        {
+            _context.Users.Update(entity);
+            _context.SaveChanges();
+        }
     }
 }
