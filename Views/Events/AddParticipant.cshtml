@@ -1,0 +1,23 @@
+@model EventParticipant
+
+@{
+    ViewData["Title"] = "Add Participant";
+}
+
+<h1>Add Participant</h1>
+
+<form asp-action="AddParticipant">
+    <div class="form-group">
+        <label asp-for="UserId" class="control-label"></label>
+        <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="EventId" />
+
+    <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-primary" />
+    </div>
+</form>
+
+<a href="@Url.Action("Participants", new { id = ViewData["EventId"] })" class="btn btn-secondary">Back to Participants</a>

@@ -1,0 +1,99 @@
+@model Event
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<h2>Event Details</h2>
+
+<div class="container">
+    <div class="row">
+        <!-- Etkinlik Detayları -->
+        <div class="col-md-6">
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.StartDate)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.EndDate)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Location)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Location)
+                </dd>
+                <dt class="col-sm-4">
+                    Organizer
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Organizer.Username)
+                </dd>
+            </dl>
+            <div class="mb-3">
+                @if (User.Identity.IsAuthenticated && Model.OrganizerId ==
+                long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                {
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    var isParticipating = Model.Participants.Any(p => p.UserId == userId);
+
+                    if (isParticipating)
+                    {
+                        <form asp-action="Unattend" method="post" class="d-inline">
+                            <input type="hidden" name="eventId" value="@Model.Id" />
+                            <button type="submit" class="btn btn-danger">Cancel Attendance</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="Attend" method="post" class="d-inline">
+                            <input type="hidden" name="eventId" value="@Model.Id" />
+                            <button type="submit" class="btn btn-primary">Attend</button>
+                        </form>
+                    }
+                }
+
+
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+
+        <!-- Katılımcı Listesi -->
+        <div class="col-md-6">
+            <h3>Participants</h3>
+            <ul class="list-group">
+                @foreach (var participant in Model.Participants)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        @participant.User.Username
+                        <a href="/profile/@participant.User.Username" class="btn btn-info btn-sm">View Profile</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

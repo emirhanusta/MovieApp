@@ -1,0 +1,33 @@
+@model List<EventParticipant>
+
+@{
+    ViewData["Title"] = "Participants";
+}
+
+<h1>Participants</h1>
+
+<p>
+    <a href="@Url.Action("AddParticipant", new { id = ViewData["EventId"] })" class="btn btn-primary">Add Participant</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.User.Username</td>
+                <td>
+                    <a href="@Url.Action("RemoveParticipant", new { id = item.Id })" class="btn btn-danger">Remove</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>

@@ -11,7 +11,7 @@ using MovieApp.Data.Concrete.Context;
 namespace MovieApp.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    [Migration("20240721184815_InitialCreate")]
+    [Migration("20240723161941_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -100,6 +100,73 @@ namespace MovieApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Directors");
+                });
+
+            modelBuilder.Entity("MovieApp.Entities.Event", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("OrganizerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizerId");
+
+                    b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("MovieApp.Entities.EventParticipant", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("EventId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EventParticipants");
                 });
 
             modelBuilder.Entity("MovieApp.Entities.Genre", b =>
@@ -322,6 +389,36 @@ namespace MovieApp.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MovieApp.Entities.Event", b =>
+                {
+                    b.HasOne("MovieApp.Entities.User", "Organizer")
+                        .WithMany("OrganizedEvents")
+                        .HasForeignKey("OrganizerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organizer");
+                });
+
+            modelBuilder.Entity("MovieApp.Entities.EventParticipant", b =>
+                {
+                    b.HasOne("MovieApp.Entities.Event", "Event")
+                        .WithMany("Participants")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieApp.Entities.User", "User")
+                        .WithMany("ParticipatedEvents")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MovieApp.Entities.Like", b =>
                 {
                     b.HasOne("MovieApp.Entities.Review", "Review")
@@ -391,6 +488,11 @@ namespace MovieApp.Migrations
                     b.Navigation("Movies");
                 });
 
+            modelBuilder.Entity("MovieApp.Entities.Event", b =>
+                {
+                    b.Navigation("Participants");
+                });
+
             modelBuilder.Entity("MovieApp.Entities.Movie", b =>
                 {
                     b.Navigation("Reviews");
@@ -404,6 +506,10 @@ namespace MovieApp.Migrations
             modelBuilder.Entity("MovieApp.Entities.User", b =>
                 {
                     b.Navigation("Likes");
+
+                    b.Navigation("OrganizedEvents");
+
+                    b.Navigation("ParticipatedEvents");
 
                     b.Navigation("Reviews");
                 });

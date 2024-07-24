@@ -12,16 +12,24 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <!-- Add these in your <head> section -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"
+        rel="stylesheet">
 
-    <!-- Add these before closing </body> tag -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.js"></script>
 
     <title>MovieApp</title>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container">
@@ -41,6 +49,9 @@
                     <li class="nav-item">
                         <a asp-controller="Watchlist" asp-action="Index" class="nav-link">Watchlist</a>
                     </li>
+                    <li class="nav-item">
+                        <a asp-controller="Events" asp-action="Index" class="nav-link">Events</a>
+                    </li>
                 }
                 else
                 {
@@ -54,24 +65,22 @@
             </ul>
         </div>
     </nav>
-    
+
     <div class="container mt-3">
         @RenderBody()
     </div>
-    
-    <!-- Footer -->
+
     <footer class="bg-light text-center text-lg-start mt-5">
         <div class="container p-4">
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
-                    <h5 >What is MovieApp</h5>
+                    <h5>What is MovieApp</h5>
                     <p>
-                        MovieApp is your go-to platform for discovering, reviewing, and enjoying movies. Stay tuned for the latest updates and features!
+                        MovieApp is your go-to platform for discovering, reviewing, and enjoying movies. Stay tuned for
+                        the latest updates and features!
                     </p>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
-
-                </div>
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0"></div>
                 <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
                     <h5 class="text-uppercase">Follow Us</h5>
                     <a href="#" class="text-dark me-4"><i class="bi bi-facebook"></i></a>
@@ -85,8 +94,7 @@
             © 2024 MovieApp. All rights reserved.
         </div>
     </footer>
-
-    @RenderSection("Scripts", required: false)
+   @RenderSection("Scripts", required: false)
 </body>
 
 </html>

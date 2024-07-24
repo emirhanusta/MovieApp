@@ -1,0 +1,41 @@
+@model IEnumerable<Event>
+
+
+    <div id="calendar"></div>
+
+    <script>
+        $(document).ready(function () {
+            var events = @Html.Raw(Json.Serialize(Model.Select(e => new {
+                id = e.Id,
+                title = e.Title,
+                start = e.StartDate.ToString("yyyy-MM-ddTHH:mm:ss"),
+                end = e.EndDate.ToString("yyyy-MM-ddTHH:mm:ss"),
+                description = e.Description
+            })));
+
+            $('#calendar').fullCalendar({
+                events: events,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                editable: true,
+                eventRender: function (event, element) {
+                    element.qtip({
+                        content: event.description,
+                        position: {
+                            target: 'mouse',
+                            adjust: { mouse: false }
+                        },
+                        style: { classes: 'qtip-dark' }
+                    });
+                },
+                eventClick: function (calEvent) {
+                    // Etkinliğin detay sayfasına yönlendirme
+                    window.location.href = '/Events/Details/' + calEvent.id;
+                }
+            });
+        });
+    </script>
+

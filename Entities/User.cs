@@ -10,6 +10,8 @@ namespace MovieApp.Entities
         public string? Biography { get; set; }
         public List<Review>? Reviews { get; set; }
         public List<Like>? Likes { get; set; }
+        public virtual ICollection<Event>?OrganizedEvents { get; set; }
+        public virtual ICollection<EventParticipant>? ParticipatedEvents { get; set; }
 
     }
 }
