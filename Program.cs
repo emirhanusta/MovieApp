@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using MovieApp.Data.Abstract;
 using MovieApp.Data.Concrete;
 using MovieApp.Data.Concrete.Context;
+using MovieApp.Entities;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +27,16 @@ builder.Services.AddScoped<IWatchlistRepository, WatchlistRepository>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IEventParticipantRepository, EventParticipantRepository>();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+// Add Identity services
+builder.Services.AddIdentity<User, Role>(options =>
+    {
+        // Identity options configuration (password requirements, lockout settings, etc.)
+    })
+    .AddEntityFrameworkStores<MovieDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie();
 
 var app = builder.Build();
 
@@ -36,7 +47,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 SeedData.Initialize(app);
-
+SeedData.IdentityTestUser(app);
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -44,7 +55,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "user_profile",
     pattern: "profile/{username}",
-    defaults: new{controller = "Users", action = "Profile"}
+    defaults: new { controller = "Users", action = "Profile" }
 );
 
 app.Run();

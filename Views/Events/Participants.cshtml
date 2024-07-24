@@ -21,7 +21,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.User.Username</td>
+                <td>@item.User.UserName</td>
                 <td>
                     <a href="@Url.Action("RemoveParticipant", new { id = item.Id })" class="btn btn-danger">Remove</a>
                 </td>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "IljZAHOVWDAviKqwMsL+7nQE8RO0Fn8DgX2yL+6oUzI=",
+  "Hash": "d9B0uq6BTcmMM09TXSSdalET3gMA8T4rhOxobshmbeI=",
   "Source": "MovieApp",
   "BasePath": "_content/MovieApp",
   "Mode": "Default",
@@ -85,12 +85,12 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\8dc9e453-0b9f-4f78-bd28-424fa32f6026.jpg",
+      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\admin.jpg",
       "SourceId": "MovieApp",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\",
       "BasePath": "_content/MovieApp",
-      "RelativePath": "img/8dc9e453-0b9f-4f78-bd28-424fa32f6026.jpg",
+      "RelativePath": "img/admin.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -99,7 +99,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\8dc9e453-0b9f-4f78-bd28-424fa32f6026.jpg"
+      "OriginalItemSpec": "wwwroot\\img\\admin.jpg"
     },
     {
       "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\avatar.jpg",
@@ -153,6 +153,57 @@
       "OriginalItemSpec": "wwwroot\\img\\christopher-nolan.jpg"
     },
     {
+      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\cillian-murphy.jpg",
+      "SourceId": "MovieApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\",
+      "BasePath": "_content/MovieApp",
+      "RelativePath": "img/cillian-murphy.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\cillian-murphy.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\david-fincher.jpg",
+      "SourceId": "MovieApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\",
+      "BasePath": "_content/MovieApp",
+      "RelativePath": "img/david-fincher.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\david-fincher.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\in-time.jpg",
+      "SourceId": "MovieApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\",
+      "BasePath": "_content/MovieApp",
+      "RelativePath": "img/in-time.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\in-time.jpg"
+    },
+    {
       "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\inception.jpg",
       "SourceId": "MovieApp",
       "SourceType": "Discovered",
@@ -187,6 +238,23 @@
       "OriginalItemSpec": "wwwroot\\img\\johnny-depp.jpg"
     },
     {
+      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\joseph-gordon-levitt.jpg",
+      "SourceId": "MovieApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\",
+      "BasePath": "_content/MovieApp",
+      "RelativePath": "img/joseph-gordon-levitt.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\joseph-gordon-levitt.jpg"
+    },
+    {
       "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\leonardo-dicaprio.jpg",
       "SourceId": "MovieApp",
       "SourceType": "Discovered",
@@ -204,6 +272,40 @@
       "OriginalItemSpec": "wwwroot\\img\\leonardo-dicaprio.jpg"
     },
     {
+      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\pirates-of-the-caribbean.jpg",
+      "SourceId": "MovieApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\",
+      "BasePath": "_content/MovieApp",
+      "RelativePath": "img/pirates-of-the-caribbean.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\pirates-of-the-caribbean.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\quentin-tarantino.jpg",
+      "SourceId": "MovieApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\",
+      "BasePath": "_content/MovieApp",
+      "RelativePath": "img/quentin-tarantino.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\quentin-tarantino.jpg"
+    },
+    {
       "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\steven-spielberg.jpg",
       "SourceId": "MovieApp",
       "SourceType": "Discovered",
@@ -219,6 +321,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\steven-spielberg.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\the-dark-knight.jpg",
+      "SourceId": "MovieApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\",
+      "BasePath": "_content/MovieApp",
+      "RelativePath": "img/the-dark-knight.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\the-dark-knight.jpg"
     },
     {
       "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\the-silence-of-the-lambs.jpg",
@@ -270,6 +389,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\tom-hanks.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\tom-hardyjpg.jpg",
+      "SourceId": "MovieApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\",
+      "BasePath": "_content/MovieApp",
+      "RelativePath": "img/tom-hardyjpg.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\tom-hardyjpg.jpg"
     },
     {
       "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\js\\site.js",

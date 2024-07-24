@@ -49,7 +49,7 @@
                                     <td>@item.StartDate.ToString("MMMM d, yyyy h:mm tt")</td>
                                     <td>@item.EndDate.ToString("MMMM d, yyyy h:mm tt")</td>
                                     <td>@Html.DisplayFor(modelItem => item.Location)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Organizer.Username)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Organizer.UserName)</td>
                                     <td>
                                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">
                                             <i class="bi bi-info-circle"></i> Details

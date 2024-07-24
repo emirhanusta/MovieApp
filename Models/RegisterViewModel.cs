@@ -5,27 +5,18 @@ namespace MovieApp.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Username")]
-        public string? Username { get; set; }
+        public string FullName { get; set; } = string.Empty;
         [Required]
-        [Display(Name = "Name")]
-        public string? Name { get; set; }
-
+        public string UserName { get; set; } = string.Empty;
         [Required]
         [EmailAddress]
-        [Display(Name = "Eposta")]
-        public string? Email { get; set; }
-
-        [Required]
-        [StringLength(10, ErrorMessage = "{0} alanı en az {2} karakter uzunluğunda olmalıdır.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Parola")]
-        public string? Password { get; set; }
-
+        public string Email { get; set; } = string.Empty;
         [Required]
         [DataType(DataType.Password)]
-        [Compare(nameof(Password), ErrorMessage = "Parolanız eşleşmedi.")]
-        [Display(Name = "Parola Tekrar")]
-        public string? ConfirmPassword { get; set; }
+        public string Password { get; set; } = string.Empty;
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare(nameof(Password), ErrorMessage = "Parolalar eşleşmiyor!")]
+        public string ConfirmPassword { get; set; } = string.Empty;
     }
 }

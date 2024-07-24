@@ -3,7 +3,7 @@
 <div class="container mt-4">
     <div class="row">
         <!-- Admin Panel -->
-        @if (User.FindFirstValue(ClaimTypes.Role) == "admin" && ViewBag.Username == User.Identity.Name)
+        @if (User.FindFirstValue(ClaimTypes.Role) == "Admin" && ViewBag.Username == User.Identity.Name)
         {
             <div class="col-lg-2 col-md-12 mt-2">
                 <h2 class="h4">Admin Panel</h2>
@@ -39,7 +39,7 @@
 
         <!-- User Profile Image and Info -->
         <div class="col-lg-2 col-md-6 col-sm-12 text-center">
-            <img src="~/img/@Model.Image" class="img-fluid rounded-circle mb-3" alt="@Model.Username" style="max-width: 150px;">
+            <img src="~/img/@Model.Image" class="img-fluid rounded-circle mb-3" alt="@Model.UserName" style="max-width: 150px;">
             <h3 class="mt-3">@Model.Name</h3>
             <!-- Edit and Delete Actions -->
             <div class="mt-3">
@@ -72,10 +72,10 @@
                                         <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
                                             <div class="card h-100">
                                                 <div class="card-header d-flex align-items-center">
-                                                    <a href="/profile/@review.User.Username" class="d-flex align-items-center">
-                                                        <img src="~/img/@review.User.Image" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="@review.User.Username">
+                                                    <a href="/profile/@review.User.UserName" class="d-flex align-items-center">
+                                                        <img src="~/img/@review.User.Image" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="@review.User.UserName">
                                                         <div>
-                                                            <h5 class="card-title mb-0" style="font-size: 1rem;">@review.User.Username</h5>
+                                                            <h5 class="card-title mb-0" style="font-size: 1rem;">@review.User.UserName</h5>
                                                         </div>
                                                     </a>
                                                 </div>
@@ -131,10 +131,10 @@
                                         <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
                                             <div class="card h-100">
                                                 <div class="card-header d-flex align-items-center">
-                                                    <a href="/profile/@like.Review.User.Username" class="d-flex align-items-center">
-                                                        <img src="~/img/@like.Review.User.Image" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="@like.Review.User.Username">
+                                                    <a href="/profile/@like.Review.User.UserName" class="d-flex align-items-center">
+                                                        <img src="~/img/@like.Review.User.Image" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="@like.Review.User.UserName">
                                                         <div>
-                                                            <h5 class="card-title mb-0" style="font-size: 1rem;">@like.Review.User.Username</h5>
+                                                            <h5 class="card-title mb-0" style="font-size: 1rem;">@like.Review.User.UserName</h5>
                                                         </div>
                                                     </a>
                                                 </div>
