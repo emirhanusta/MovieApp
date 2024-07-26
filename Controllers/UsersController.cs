@@ -56,16 +56,16 @@ namespace MovieApp.Controllers
                     {
                         var lockoutDate = await _userManager.GetLockoutEndDateAsync(user);
                         var timeLeft = lockoutDate.Value - DateTime.UtcNow;
-                        ModelState.AddModelError("", $"Hesabınız kitlendi, Lütfen {timeLeft.Minutes} dakika sonra deneyiniz");
+                        ModelState.AddModelError("", $"Your account is locked out. Please try again in {timeLeft.Minutes} minutes.");
                     }
                     else
                     {
-                        ModelState.AddModelError("", "parolanız hatalı");
+                        ModelState.AddModelError("", "Wrong password");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "bu email adresiyle bir hesap bulunamadı");
+                    ModelState.AddModelError("", "user not found");
                 }
             }
             return View(model);

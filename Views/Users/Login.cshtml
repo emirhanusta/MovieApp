@@ -1,23 +1,34 @@
 @model LoginViewModel    
 
-<h2>Login</h2>
-<hr>
-<form asp-action="Login" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label"></label>
-        <input asp-for="Email" class="form-control">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-center">Login</h2>
+                    <hr>
+                    <form asp-action="Login" method="post">
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email Address</label>
+                            <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Password</label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input asp-for="RememberMe" type="checkbox" class="form-check-input">
+                            <label asp-for="RememberMe" class="form-check-label">Remember Me</label>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-        <label asp-for="Password" class="form-label"></label>
-        <input asp-for="Password" class="form-control">
-    </div>
-    <div class="form-check mb-3">
-        <input asp-for="RememberMe" class="form-check-input">
-        <label asp-for="RememberMe" class="form-check-label"></label>
-    </div>
-
-
-    <button type="submit" class="btn btn-success">Giriş</button>
-    <a asp-action="ForgotPassword" class="btn btn-warning">Şifremi Unuttum</a>
-</form>
+</div>

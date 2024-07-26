@@ -12,25 +12,25 @@
                     <!-- Movies Management -->
                     <div class="col-lg-12 mb-4">
                         <h3 class="h5">Movies</h3>
-                        <div class="btn-group-vertical" role="group">
-                            <a asp-action="Index" asp-controller="Movies" class="btn btn-outline-primary mb-2">View All Movies</a>
-                            <a asp-action="Create" asp-controller="Movies" class="btn btn-outline-primary">Create Movie</a>
+                        <div class="list-group">
+                            <a asp-action="Index" asp-controller="Movies" class="list-group-item list-group-item-action">View All Movies</a>
+                            <a asp-action="Create" asp-controller="Movies" class="list-group-item list-group-item-action">Create Movie</a>
                         </div>
                     </div>
                     <!-- Directors Management -->
                     <div class="col-lg-12 mb-4">
                         <h3 class="h5">Directors</h3>
-                        <div class="btn-group-vertical" role="group">
-                            <a asp-action="Index" asp-controller="Director" class="btn btn-outline-primary mb-2">View All Directors</a>
-                            <a asp-action="Create" asp-controller="Director" class="btn btn-outline-primary">Create Director</a>
+                        <div class="list-group">
+                            <a asp-action="Index" asp-controller="Director" class="list-group-item list-group-item-action">View All Directors</a>
+                            <a asp-action="Create" asp-controller="Director" class="list-group-item list-group-item-action">Create Director</a>
                         </div>
                     </div>
                     <!-- Actors Management -->
                     <div class="col-lg-12 mb-4">
                         <h3 class="h5">Actors</h3>
-                        <div class="btn-group-vertical" role="group">
-                            <a asp-action="Index" asp-controller="Actor" class="btn btn-outline-primary mb-2">View All Actors</a>
-                            <a asp-action="Create" asp-controller="Actor" class="btn btn-outline-primary">Create Actor</a>
+                        <div class="list-group">
+                            <a asp-action="Index" asp-controller="Actor" class="list-group-item list-group-item-action">View All Actors</a>
+                            <a asp-action="Create" asp-controller="Actor" class="list-group-item list-group-item-action">Create Actor</a>
                         </div>
                     </div>
                 </div>
@@ -39,12 +39,12 @@
 
         <!-- User Profile Image and Info -->
         <div class="col-lg-2 col-md-6 col-sm-12 text-center">
-            <img src="~/img/@Model.Image" class="img-fluid rounded-circle mb-3" alt="@Model.UserName" style="max-width: 150px;">
+            <img src="~/img/@Model.Image" class="img-fluid rounded-circle mb-3 shadow" alt="@Model.UserName" style="max-width: 150px;">
             <h3 class="mt-3">@Model.Name</h3>
             <!-- Edit and Delete Actions -->
             <div class="mt-3">
                 <a href="@Url.Action("Edit", "Users", new { id = Model.Id })" class="btn btn-warning me-2">Edit</a>
-                <a asp-action="Delete" asp-asp-controller="Users" asp-route-id="@Model.Id" class="btn btn-danger btn-sm">Delete</a>                
+                <a asp-action="Delete" asp-controller="Users" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
             </div>
         </div>
 
@@ -69,8 +69,8 @@
                                 {
                                     @foreach (var review in Model.Reviews)
                                     {
-                                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card h-100">
+                                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                                            <div class="card h-100 shadow-sm">
                                                 <div class="card-header d-flex align-items-center">
                                                     <a href="/profile/@review.User.UserName" class="d-flex align-items-center">
                                                         <img src="~/img/@review.User.Image" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="@review.User.UserName">
@@ -83,7 +83,7 @@
                                                     <a asp-action="Details" asp-controller="Movies" asp-route-id="@review.Movie.Id">
                                                         <div class="d-flex align-items-start">
                                                             <div class="me-3">
-                                                                <img src="~/img/@review.Movie.Image" class="img-fluid" style="width: 80px;" alt="@review.Movie.Title">
+                                                                <img src="~/img/@review.Movie.Image" class="img-fluid rounded shadow-sm" style="width: 80px;" alt="@review.Movie.Title">
                                                             </div>
                                                             <div>
                                                                 <h5 class="card-title mb-0" style="font-size: 1rem;">
@@ -128,8 +128,8 @@
                                 {
                                     @foreach (var like in Model.Likes)
                                     {
-                                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card h-100">
+                                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                                            <div class="card h-100 shadow-sm">
                                                 <div class="card-header d-flex align-items-center">
                                                     <a href="/profile/@like.Review.User.UserName" class="d-flex align-items-center">
                                                         <img src="~/img/@like.Review.User.Image" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="@like.Review.User.UserName">
@@ -142,7 +142,7 @@
                                                     <a asp-action="Details" asp-controller="Movies" asp-route-id="@like.Review.MovieId">
                                                         <div class="d-flex align-items-start">
                                                             <div class="me-3">
-                                                                <img src="~/img/@like.Review.Movie.Image" class="img-fluid" style="width: 80px;" alt="@like.Review.Movie.Title">
+                                                                <img src="~/img/@like.Review.Movie.Image" class="img-fluid rounded shadow-sm" style="width: 80px;" alt="@like.Review.Movie.Title">
                                                             </div>
                                                             <div>
                                                                 <h5 class="card-title mb-0" style="font-size: 1rem;">

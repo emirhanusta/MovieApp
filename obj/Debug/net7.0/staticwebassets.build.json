@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "d9B0uq6BTcmMM09TXSSdalET3gMA8T4rhOxobshmbeI=",
+  "Hash": "BJN4YxEpoHlLCg3qSybknH31zprm3egZ2udMGVhC/UQ=",
   "Source": "MovieApp",
   "BasePath": "_content/MovieApp",
   "Mode": "Default",
@@ -272,6 +272,23 @@
       "OriginalItemSpec": "wwwroot\\img\\leonardo-dicaprio.jpg"
     },
     {
+      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\martin-scorsese.jpg",
+      "SourceId": "MovieApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\",
+      "BasePath": "_content/MovieApp",
+      "RelativePath": "img/martin-scorsese.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\martin-scorsese.jpg"
+    },
+    {
       "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\pirates-of-the-caribbean.jpg",
       "SourceId": "MovieApp",
       "SourceType": "Discovered",
@@ -391,12 +408,12 @@
       "OriginalItemSpec": "wwwroot\\img\\tom-hanks.jpg"
     },
     {
-      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\tom-hardyjpg.jpg",
+      "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\tom-hardy.jpg",
       "SourceId": "MovieApp",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\",
       "BasePath": "_content/MovieApp",
-      "RelativePath": "img/tom-hardyjpg.jpg",
+      "RelativePath": "img/tom-hardy.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -405,7 +422,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\tom-hardyjpg.jpg"
+      "OriginalItemSpec": "wwwroot\\img\\tom-hardy.jpg"
     },
     {
       "Identity": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\js\\site.js",

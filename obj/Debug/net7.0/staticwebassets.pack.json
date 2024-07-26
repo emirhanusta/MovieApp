@@ -57,6 +57,10 @@
       "PackagePath": "staticwebassets\\img\\leonardo-dicaprio.jpg"
     },
     {
+      "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\martin-scorsese.jpg",
+      "PackagePath": "staticwebassets\\img\\martin-scorsese.jpg"
+    },
+    {
       "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\pirates-of-the-caribbean.jpg",
       "PackagePath": "staticwebassets\\img\\pirates-of-the-caribbean.jpg"
     },
@@ -85,8 +89,8 @@
       "PackagePath": "staticwebassets\\img\\tom-hanks.jpg"
     },
     {
-      "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\tom-hardyjpg.jpg",
-      "PackagePath": "staticwebassets\\img\\tom-hardyjpg.jpg"
+      "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\img\\tom-hardy.jpg",
+      "PackagePath": "staticwebassets\\img\\tom-hardy.jpg"
     },
     {
       "Id": "C:\\Users\\emirh\\Desktop\\MovieApp\\wwwroot\\js\\site.js",

@@ -1,15 +1,23 @@
-﻿<div class="container">
+﻿<div class="container mt-5">
     <div class="row">
         <!-- Left Column: NewMovies and PopularMovies -->
         <div class="col-lg-7">
             <div class="row">
                 <!-- NewMovies Component -->
                 <div class="col-12 mb-4">
-                    @await Component.InvokeAsync("NewMovies")
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            @await Component.InvokeAsync("NewMovies")
+                        </div>
+                    </div>
                 </div>
                 <!-- PopularMovies Component -->
                 <div class="col-12 mb-4">
-                    @await Component.InvokeAsync("PopularMovies")
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            @await Component.InvokeAsync("PopularMovies")
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -18,11 +26,19 @@
         <div class="col-lg-5">
             <!-- PopularGenres Component -->
             <div class="mb-4">
-                @await Component.InvokeAsync("PopularGenres")
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        @await Component.InvokeAsync("PopularGenres")
+                    </div>
+                </div>
             </div>
             <!-- PopularReviews Component -->
             <div>
-                @await Component.InvokeAsync("PopularReviews")
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        @await Component.InvokeAsync("PopularReviews")
+                    </div>
+                </div>
             </div>
         </div>
     </div>
