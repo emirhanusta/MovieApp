@@ -23,7 +23,7 @@ namespace MovieApp.Controllers
             _directorRepository = directorRepository;
         }
 
-        [Authorize (Roles = "admin")]
+        [Authorize (Roles = "Admin")]
         public IActionResult Index(string? searchString)
         {
             ViewData["CurrentFilter"] = searchString;
@@ -56,7 +56,7 @@ namespace MovieApp.Controllers
             return View(movie);
         }
 
-        [Authorize (Roles = "admin")]
+        [Authorize (Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -64,7 +64,7 @@ namespace MovieApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize (Roles = "admin")]
+        [Authorize (Roles = "Admin")]
         public IActionResult Create(Director director, IFormFile imageFile)
         {
             if (ModelState.IsValid)

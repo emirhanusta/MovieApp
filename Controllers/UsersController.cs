@@ -20,7 +20,8 @@ namespace MovieApp.Controllers
         private SignInManager<User> _signInManager;
         public UsersController(UserManager<User> userManager,
             RoleManager<Role> roleManager,
-            SignInManager<User> signInManager){
+            SignInManager<User> signInManager)
+        {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
@@ -70,7 +71,8 @@ namespace MovieApp.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult>Logout(){
+        public async Task<IActionResult> Logout()
+        {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
@@ -83,28 +85,88 @@ namespace MovieApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var user = new User { 
+                var user = new User
+                {
                     UserName = model.UserName,
-                    Email = model.Email, 
+                    Email = model.Email,
                     Name = model.FullName,
                     CreatedDate = DateTime.Now,
                     Image = "avatar.jpg"
                 };
 
                 IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-
+                _userManager.AddToRoleAsync(user, "User").Wait();
                 foreach (IdentityError err in result.Errors)
                 {
-                    ModelState.AddModelError("", err.Description);                    
+                    ModelState.AddModelError("", err.Description);
                 }
             }
-            return View(model);
+            return RedirectToAction("Login");
         }
 
+        public async Task<IActionResult> Edit(string id)
+        {
 
-        [Authorize]
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+
+                ViewBag.Roles = await _roleManager.Roles.Select(i => i.Name).ToListAsync();
+                return View(new UserEditViewmodel
+                {
+                    Id = user.Id,
+                    FullName = user.Name,
+                    Email = user.Email,
+                    Image = user.Image
+                });
+            }
+            return View();
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> Edit(long id, UserEditViewmodel model, IFormFile? imageFile)
+        {
+            if (id != model.Id)
+            {
+                return RedirectToAction("Index");
+            }
+            var userName = "";
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(id.ToString());
+                if (user != null)
+                {
+                    userName = user.UserName;
+                    user.Email = model.Email;
+                    user.Name = model.FullName;
+                    if (imageFile != null)
+                    {
+                        user.Image = await SaveImageAsync(imageFile);
+                    }
+
+                    var result = await _userManager.UpdateAsync(user);
+
+                    if (result.Succeeded && !string.IsNullOrEmpty(model.Password))
+                    {
+                        await _userManager.RemovePasswordAsync(user);
+                        await _userManager.AddPasswordAsync(user, model.Password);
+                    }
+                    foreach (IdentityError err in result.Errors)
+                    {
+                        ModelState.AddModelError("", err.Description);
+                    }
+                }
+            }
+            return RedirectToAction("Profile", new { username = userName });
+        }
+
         public IActionResult Profile(string username)
         {
             if (string.IsNullOrEmpty(username))
@@ -134,15 +196,53 @@ namespace MovieApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(long id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
 
             if (user != null)
             {
                 await _userManager.DeleteAsync(user);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Register");
+        }
+
+        private async Task<string> SaveImageAsync(IFormFile imageFile)
+        {
+            var allowedExtensions = new[] { ".jpg", ".png", ".jpeg" };
+            var randomFileName = string.Empty;
+
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var extension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("ImageFile", "Please select a valid image file.");
+                }
+                else
+                {
+                    randomFileName = $"{Guid.NewGuid()}{extension}";
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", randomFileName);
+
+                    try
+                    {
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await imageFile.CopyToAsync(stream);
+                        }
+                    }
+                    catch
+                    {
+                        ModelState.AddModelError("ImageFile", "An error occurred while uploading the file.");
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("ImageFile", "Please select an image file.");
+            }
+
+            return randomFileName;
         }
     }
 }

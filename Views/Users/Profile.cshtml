@@ -44,7 +44,7 @@
             <!-- Edit and Delete Actions -->
             <div class="mt-3">
                 <a href="@Url.Action("Edit", "Users", new { id = Model.Id })" class="btn btn-warning me-2">Edit</a>
-                <a href="@Url.Action("Delete", "Users", new { id = Model.Id })" class="btn btn-danger">Delete</a>
+                <a asp-action="Delete" asp-asp-controller="Users" asp-route-id="@Model.Id" class="btn btn-danger btn-sm">Delete</a>                
             </div>
         </div>
 

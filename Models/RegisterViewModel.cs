@@ -16,7 +16,7 @@ namespace MovieApp.Models
         public string Password { get; set; } = string.Empty;
         [Required]
         [DataType(DataType.Password)]
-        [Compare(nameof(Password), ErrorMessage = "Parolalar eşleşmiyor!")]
+        [Compare(nameof(Password), ErrorMessage = "Passwords do not match!")]
         public string ConfirmPassword { get; set; } = string.Empty;
     }
 }

@@ -12,7 +12,7 @@ namespace MovieApp.Data.Concrete.Context
     {
         public static async void IdentityTestUser(IApplicationBuilder app)
         {
-            string admin = "emirhanusta";
+            string adminName = "emirhanusta";
             string adminPassword = "Password_123";
 
             var context = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<MovieDbContext>();
@@ -23,25 +23,36 @@ namespace MovieApp.Data.Concrete.Context
             }
 
             var userManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<UserManager<User>>();
+            var roleManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<RoleManager<Role>>();
 
-            var user = await userManager.FindByNameAsync(admin);
-
-            if (user == null)
+            var admin = await userManager.FindByNameAsync(adminName);
+            if (!await roleManager.RoleExistsAsync("Admin"))
+            {
+                await roleManager.CreateAsync(new Role { Name = "Admin" });
+            }
+            if (!await roleManager.RoleExistsAsync("User"))
+            {
+                await roleManager.CreateAsync(new Role { Name = "User" });
+            }
+            if (admin == null)
             {
 
-                user = new User
+                admin = new User
                 {
 
                     Name = "Emirhan Usta",
-                    UserName = admin,
+                    UserName = adminName,
                     Email = "admin@emirhanusta.com",
-                    Image = "admin.jpeg",
+                    Image = "admin.jpg",
                     CreatedDate = DateTime.Now
                 };
 
-                await userManager.CreateAsync(user, adminPassword);
+                await userManager.CreateAsync(admin, adminPassword);
 
+                await userManager.AddToRoleAsync(admin, "Admin");
             }
+
+            
 
 
         }

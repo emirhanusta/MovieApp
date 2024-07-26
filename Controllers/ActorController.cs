@@ -22,7 +22,7 @@ namespace MovieApp.Controllers
             _actorRepository = actorRepository;
         }
 
-        [Authorize (Roles = "admin")]
+        [Authorize (Roles = "Admin")]
         public async Task<IActionResult> Index(string searchString)
         {
             ViewData["CurrentFilter"] = searchString;

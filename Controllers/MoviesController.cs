@@ -179,7 +179,7 @@ namespace MovieApp.Controllers
             return View(await movies.Include(m => m.Reviews).OrderByDescending(m => m.Reviews.Count).ToListAsync());
         }
 
-        [Authorize (Roles = "admin")]
+        [Authorize (Roles = "Admin")]
         public async Task<IActionResult> Edit(long id)
         {
             var movie = await _movieRepository.Movies.Include(m => m.Director).Include(m => m.Genres).Include(m => m.Actors).FirstOrDefaultAsync(m => m.Id == id);
@@ -209,7 +209,7 @@ namespace MovieApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize (Roles = "admin")]
+        [Authorize (Roles = "Admin")]
         public async Task<IActionResult> Edit(MovieUpdateViewModel model, long[] genreIds, long[] actorIds, IFormFile? imageFile)
         {
             if (ModelState.IsValid)
@@ -253,7 +253,7 @@ namespace MovieApp.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(long? id)
         {
             var movie = _movieRepository.Movies.FirstOrDefault(w => w.Id == id);

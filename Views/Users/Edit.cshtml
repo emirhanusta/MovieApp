@@ -1,1 +1,52 @@
-editlenmek mi istiyorsunuz? YAKINDA
+@model UserEditViewmodel
+
+<h2>Edit User</h2>
+<hr>
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="Id" value="@Model.Id">
+
+    <div class="mb-3">
+        <label asp-for="FullName" class="form-label"></label>
+        <input asp-for="FullName" class="form-control">
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Current Image</label>
+        <div>
+            <img src="~/img/@Model.Image" class="img-thumbnail" alt="@Model.FullName" style="max-width: 150px;" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="imageFile" class="form-label">New Image</label>
+        <input type="file" id="imageFile" name="imageFile" class="form-control" />
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">Update Password</div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" type="password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword" class="form-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" type="password">
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
